@@ -1,0 +1,115 @@
+*{
+    font-family: 'Oswald', sans-serif;
+}
+
+.navbar-brand{
+    width: 60px;
+    height: 50px;
+}
+
+a, a:hover, a:active, a:visited{
+    text-decoration: none;
+    outline: none;
+    color: white;
+}
+
+.page-header{
+    background-color: #ffb253;
+}
+
+@media only screen and (min-width: 1025px) {
+    .page-header{
+        display: grid;
+        grid-template-columns: auto 50% auto;
+    }
+
+    nav{
+        grid-column: 2;
+    }
+}
+
+@media only screen and (min-width: 767px) {
+    .nav-btn{
+        border-radius: 100px;
+        background-color: #78c1ff;
+        box-shadow: 3px 3px 5px 0 rgba(0,0,0,.1);
+        padding: 8px 25px;
+
+        color: white;
+        user-select: none;
+    }
+}
+
+.myfooter{
+    height: 190px; 
+    background-image: url('https://res.cloudinary.com/glovoapp/image/fetch///https://glovoapp.com/images/svg/curve.svg'); 
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: scaleY(-1);
+    background-color: #4a4a4a;
+}
+
+.info-container{
+    position: relative;
+    width: 100%;
+    background-color: #4a4a4a;
+    color: white;
+    margin-top: -1px;
+    font-size: 14px;
+    padding-top: 50px;
+    padding-bottom: 25px;
+    overflow-x: auto !important;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+
+.inline-logo{
+    max-width: 150px; 
+    height: 35px;
+    grid-column: 1;
+}
+
+.info-container>div{
+    padding-left: 10px;
+}
+
+.footer-column{
+    text-transform: uppercase;
+    text-align: bottom;
+}
+
+.col-item{
+    padding-bottom: 10px;
+}
+
+.headline{
+    height: 35px;
+    display: flex;
+    justify-content: center; 
+    align-content: center;
+    flex-direction: column;
+    text-transform: uppercase;
+    color: #9b9b9b;
+}
+
+@media only screen and (min-width: 1025px) {
+    .info-container{
+        display: grid;
+        grid-template-columns: auto 10% 10% 10% 10% 10% auto;
+    }
+
+    .inline-logo{
+        grid-column: 2;
+    }
+}
+
+.inline-logo>img{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.root{
+    max-width: 740px;
+}
