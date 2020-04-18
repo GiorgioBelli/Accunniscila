@@ -1,41 +1,22 @@
-.myCard{
-    border-radius: 20px;
-    box-shadow: 4px 2px 8px 1px #ece8e8;
-    width: 80%;
-    height: auto;
-}
-
-.container{
+.menu.container{
     margin-top: 50px !important;
     margin-bottom: 10px !important;
 }
 
-.row{
+.menu > .row{
     text-align: -webkit-center !important;
 }
 
 .myCard-img{
-    position: relative;
     width: 100%;
-    height: auto;
-    padding: 10px;
 }
 
 .myCard-desc{
-    position: relative;
     width: 100%;
-    height: auto;
-    padding-bottom: 5px;
-    padding-top: 20px;
 }
 
-.myCard-desc>p{
-    color: #929292;
-}
-
-.myCard-price{
-    color: #333333 !important;
-    text-align: left;
-    padding-left: 20px;
-    padding-top: 20px;
+@media only screen and (max-width: 1025px) {
+    .myCard{
+        width: 100%;
+    }
 }
