@@ -1,79 +1,54 @@
-
 var total_ingredients;
+
+var currentBlockRenderer = null;
 
 function main(){
 
-    i1 = new Ingredient(
+    mushroom = new Ingredient(
         1,
         "mushroom",
+        3,
+        3,
         "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
         );
-    i2 = new Ingredient(
+    potato = new Ingredient(
         2,
-        "peperoni2",
+        "potato",
+        2,
+        2,
         "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
         );
-    i3 = new Ingredient(
+    tomato = new Ingredient(
         3,
-        "peperoni3",
+        "tomato",
+        5,
+        1,
         "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
         );
-    i4 = new Ingredient(
+    olives = new Ingredient(
+        4,
+        "olives",
+        10,
         3,
-        "peperoni3",
         "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
         );
 
-    total_ingredients = [i1,i2,i3,i4,i2,i3,i4];
+    total_ingredients = [mushroom,potato,tomato,olives];
 
     pizza = new Pizza();
-    pizza.addIngredient(i1);
-    pizza.addIngredient(i2);
-    pizza.addIngredient(i3);
-    pizza.addIngredient(i4);
-
     pizza2 = new Pizza();
-    pizza2.addIngredient(i1);
-    pizza2.addIngredient(i2);
-    pizza2.addIngredient(i3);
-    pizza2.addIngredient(i4);
+
+    menu_pizza1 = new Pizza("nome1",1,"",[mushroom,potato,tomato]);
+    menu_pizza2 = new Pizza("nome1",1,"",[olives,potato,tomato]);
 
     list = [pizza,pizza2];
 
-    $(".root").append(PizzasListRender.PizzasListRenderer(list));
-}
+    $(".root").prepend(PizzasListRender.PizzasListRenderer(list));
+    $(".btn.add-pizza").click((e)=>{
+        PizzasListRender.addPizzaToList($(".root"),new Pizza());
+    });
 
-class Pizza{
-
-    static maxIngredients = 12;
-
-    constructor(name = "default_name",ingredients = [],slices=1){
-        this.ingredients = ingredients;
-        this.name = name;
-        this.slices = slices;
-    }
-
-    addIngredient(ingredient){
-        // if(this.ingredients.length >= Pizza.maxIngredients) throw "Massimo numero di condimenti raggiunti";
-        this.ingredients.push(ingredient);
-    }
-
-    get price(){
-
-    }
-
-    calcPrice(){
-
-    }
-}
-
-class Ingredient{
-    constructor(id,name = "default_name", image_path = ""){
-        this.id = id;
-        this.name = name;
-        this.image_path = image_path;
-    }
-
+    $("#menu-modal .modal-body").append(PizzasListRender.createModalMenuList([menu_pizza1,menu_pizza2]));
 }
 
 class IngredientRenderer{
@@ -117,6 +92,7 @@ class IngredientRenderer{
 
     static createPizzaPreviewIngredient(ingredient,slice,slices){
         var preview_ingredient = $(`<div name="${ingredient.name}" data-slice="${slices}_${slice}" class="ingredient_preview"></div>`);
+        preview_ingredient.css("z-index",ingredient.severity);
         if(slice == null) slice=1;
         preview_ingredient.css("background-image",`url(http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/${ingredient.name}/${ingredient.name}_${slices}_${slice}.png)`)
         
@@ -143,6 +119,33 @@ class IngredientRenderer{
         html_ingredient.find(".btn.remove-ingredient").click(remove_ingredient_handler);
 
         return html_ingredient;
+    }
+}
+
+class PizzaRenderer{
+    static createModalMenuCard(pizza,blockRenderer,onClick=(pizza,currentBlockRenderer)=>{}){
+        var card = $(`<div class="myCard container">
+            <div class="row">
+                <img class="myCard-img col-sm" src="${pizza.image_path}">
+                <div class="myCard-desc col-sm">
+                    <h2>${pizza.name}</h2>
+                    <p>${pizza.description}</p>
+                </div>
+            </div>
+            <div class="row">
+                <h2 class="myCard-price col-sm text-left">€ ${pizza.price}</h2>
+            </div>
+        </div>`);
+
+        card.click((e)=>{
+            console.log(blockRenderer);
+            onClick(pizza,currentBlockRenderer);
+            $('#menu-modal').modal("hide");
+            
+        });
+
+        return card;
+        
     }
 }
 
@@ -174,9 +177,14 @@ class PizzaBlockRenderer{
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-default remove-pizza-block" aria-label="Trash">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
-                </button>
+                <div>
+                    <button type="button" class="btn btn-default reset-pizza-block" aria-label="Trash">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
+                    </button>
+                    <button type="button" class="btn btn-default remove-pizza-block" aria-label="Trash">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
+                    </button>
+                </div>
             </div>`
         );
 
@@ -196,6 +204,9 @@ class PizzaBlockRenderer{
             })
         }).bind(this);
         pizza_header.find(".btn.remove-pizza-block").click(block_remover_handler);
+
+        var reset_handler = (() => {this.resetPizza()}).bind(this);
+        pizza_header.find(".btn.reset-pizza-block").click(reset_handler);
 
         return pizza_header;
 
@@ -237,9 +248,15 @@ class PizzaBlockRenderer{
     }
 
     addChoosenIngredient(ingredient,slice,slices){
+        if(this.pizza_preview.find(`div[name="${ingredient.name}"][data-slice="${slices}_${slice}"]`).length){
+            //already picked
+            return;
+        }
+        this.pizza.addIngredient(ingredient);
+
 
         var onIngredientRemove = ((ingredient,slice,slices) => {
-            delete this.pizza.ingredients[ingredient.id];
+            delete this.pizza.chosenIngredients[ingredient.id];
             this.removeChoosenIngredient(ingredient,slice,slices);
         }).bind(this);
 
@@ -254,10 +271,17 @@ class PizzaBlockRenderer{
 
     }
 
+    resetPizza(){
+        this.pizza.chosenIngredients = [];
+        this.pizza_preview.children().remove();
+        this.choosen_ingredients.children().remove();
+    }
 
     htmlIngredientsPicker(){
+
+        var container = $(`<div class="container"><div class="ingredients_picker_container row"></div></div>`);
         
-        var html_ingredient_picker = $(`<div id="ingredients_picker" class="ingredients_picker"></div>`); 
+        var html_ingredient_picker = $(`<div id="ingredients_picker" class="ingredients_picker col-sm-10"></div>`); 
         
         var onIngredientPicked = ((ingredient,target)=>{
             
@@ -266,7 +290,6 @@ class PizzaBlockRenderer{
                     this.pizza.slices,
                     ingredient,
                     ((ingredient,slice) => {
-                        this.pizza.addIngredient(ingredient);
                         this.addChoosenIngredient(ingredient,slice,this.pizza.slices);
                     }).bind(this)
                 )
@@ -275,7 +298,6 @@ class PizzaBlockRenderer{
                 
                 target.before(ingredient_slice_selector)
             }else{
-                this.pizza.addIngredient(ingredient);
                 this.addChoosenIngredient(ingredient,1,this.pizza.slices); 
 
             }
@@ -289,13 +311,14 @@ class PizzaBlockRenderer{
             )
         );
 
-        // html_ingredient_picker.slick({
-        //     dots: false,
-        //     prevArrow: false,
-        //     nextArrow: false
-        // });
+        var html_btn_from_menu = $(`<button type="button"  data-toggle="modal" data-target="#menu-modal" class="btn btn-warning text-nowrap add-from-menu col-sm-1">apri menu</button>`);
 
-        return html_ingredient_picker;
+        html_btn_from_menu.click((()=>{window.currentBlockRenderer = this}).bind(this))
+
+        container.find(".row").append(html_ingredient_picker);
+        container.find(".row").append(html_btn_from_menu);
+
+        return container;
     }
 
     render(){
@@ -307,6 +330,20 @@ class PizzasListRender{
 
     static PizzasListRenderer(pizzas_list = []){
         return pizzas_list.map((pizza)=> new PizzaBlockRenderer(pizza).render());
+    }
+
+    static addPizzaToList(listItem,pizza){
+        listItem.find(".btn.add-pizza").before(new PizzaBlockRenderer(pizza).render());
+    }
+
+    static createModalMenuList(pizzas_list = []){
+        var onItemClick = (pizza,blockRenderer)=>{
+            blockRenderer.resetPizza();
+            pizza.chosenIngredients.forEach(ingredient => {
+                blockRenderer.addChoosenIngredient(ingredient,1,1);
+            });
+        };
+        return pizzas_list.map((pizza)=> PizzaRenderer.createModalMenuCard(pizza,currentBlockRenderer,onItemClick));
     }
 }
 
