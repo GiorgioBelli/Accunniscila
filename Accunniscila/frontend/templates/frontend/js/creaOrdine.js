@@ -52,8 +52,8 @@ function main(){
     pizza = new Pizza();
     pizza2 = new Pizza();
 
-    menu_pizza1 = new Pizza("nome1",1,"",[mushroom,potato,tomato]);
-    menu_pizza2 = new Pizza("nome1",1,"",[olives,potato,tomato]);
+    menu_pizza1 = new Pizza("nome1",3,"",[[mushroom,1],[potato,2],[tomato,3]]);
+    menu_pizza2 = new Pizza("nome1",2,"",[[olives,1],[potato,2],[tomato,2]]);
 
     list = [pizza,pizza2];
 
@@ -152,7 +152,6 @@ class PizzaRenderer{
         </div>`);
 
         card.click((e)=>{
-            console.log(blockRenderer);
             onClick(pizza,currentBlockRenderer);
             $('#menu-modal').modal("hide");
             
@@ -272,7 +271,7 @@ class PizzaBlockRenderer{
             this.removeChoosenIngredient(ingredient,slice,slices);
         }).bind(this);
 
-        this.pizza_preview.append(IngredientRenderer.createPizzaPreviewIngredient(ingredient,slice,this.pizza.slices))
+        this.pizza_preview.append(IngredientRenderer.createPizzaPreviewIngredient(ingredient,slice,slices))
         this.choosen_ingredients.append(IngredientRenderer.ChoosenRender(ingredient,slice,slices,onIngredientRemove));
 
     }
@@ -359,7 +358,7 @@ class PizzasListRender{
         var onItemClick = (pizza,blockRenderer)=>{
             blockRenderer.resetPizza();
             pizza.chosenIngredients.forEach(ingredient => {
-                blockRenderer.addChoosenIngredient(ingredient,1,1);
+                blockRenderer.addChoosenIngredient(ingredient[0],ingredient[1],pizza.slices);
             });
         };
         return pizzas_list.map((pizza)=> PizzaRenderer.createModalMenuCard(pizza,currentBlockRenderer,onItemClick));
