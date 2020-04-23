@@ -3,10 +3,10 @@ class Pizza{
         this.name = name;
         this.slices = slices;
         this.image_path = image_path;
-        this.chosenIngredients = chosenIngredients; // lista di tuple (ingrediente, slice)
+        this.chosenIngredients = chosenIngredients; // lista di tuple(array di 2): (ingrediente, slice)
     }
 
-    addIngredient(chosenIngredient){
+    addIngredient(chosenIngredient){ // tupla (ingrediente, slice)
         this.chosenIngredients.push(chosenIngredient);
     }
 
@@ -51,5 +51,12 @@ class Menu{
 
     addPizza(pizza){
         this.pizzas.push(pizza);
+    }
+}
+
+//modella una parte di pizza divisa in piu gusti (es. 3 gusti lo slice 3 è la parte destra, il 2 la centrale ....)
+class Slice{
+    constructor(id){
+        this.id = id;
     }
 }

@@ -1,5 +1,54 @@
 {% extends '../frontend/base.html' %}
 
 {% block content %}
+    <div class="form container">
+        <div class="form-logo">
+            <img src="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/1x/inline_logo.png">
+        </div>
+        <div class="row first">
+            <div class="col-sm">
+                <input class="form-control form-control-lg" type="text" placeholder="Nome">
+            </div>
+            <div class="col-sm">
+                <input class="form-control form-control-lg" type="text" placeholder="Cognome">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <input class="form-control form-control-lg" type="email" placeholder="Email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <input class="form-control form-control-lg" type="password" placeholder="Password">
+            </div>
+            <div class="col-sm">
+                <input class="form-control form-control-lg" type="password" placeholder="Confirm Password">
+            </div>
+        </div>
+        <div class="row last">
+            <div class="col-sm">
+                <input class="form-control form-control-lg" type="text" placeholder="N. Telefono" pattern="[0-9]{10,10}">
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm text-center mb-0">
+                <a href="http://217.61.121.77:8000/login/" class="btn btn-link text-center">Sei gia registrato? Accedi.</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm mt-0">
+                <div class="mybtn">Registrati</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/core/css/registration.css">
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/core/js/registration.js"></script>
 {% endblock %}

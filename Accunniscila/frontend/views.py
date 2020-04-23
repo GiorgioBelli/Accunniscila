@@ -1,11 +1,17 @@
 from django.shortcuts import render
 
 # Create your views here.
-def index(request):
+def Index(request):
     return render(request, 'frontend/homepage.html')
 
-def creaOrdine(request):
+def CreaOrdine(request):
     return render(request, 'frontend/creaOrdine.html')
 
-def menu(request):
+def Menu(request):
     return render(request, 'frontend/menu.html')
+
+def SignUp(request):
+    return render(request, 'core/registration.html')
+
+def Login(request):
+    return render(request, 'core/login.html')

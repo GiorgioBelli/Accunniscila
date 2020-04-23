@@ -32,8 +32,22 @@ function main(){
         3,
         "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
         );
+    wurstel = new Ingredient(
+        4,
+        "wurstel",
+        10,
+        3,
+        "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+        );
+    fried_potatoes = new Ingredient(
+        4,
+        "fried_potatoes",
+        10,
+        3,
+        "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+        );
 
-    total_ingredients = [mushroom,potato,tomato,olives];
+    total_ingredients = [mushroom,potato,tomato,olives,wurstel,fried_potatoes];
 
     pizza = new Pizza();
     pizza2 = new Pizza();
@@ -101,7 +115,7 @@ class IngredientRenderer{
     
     }
 
-    static ChoosenRender(ingredient,slice,slices,onRemove = (ingredient)=>{}){
+    static ChoosenRender(ingredient,slice,slices,onRemove = (ingredient,slice,slices)=>{}){
         var html_ingredient = $(`
         <div class="choosed ingredient" name="${ingredient.name}" data-slice="${slices}_${slice}" data-id="${ingredient.id}">
             <div class="image">
@@ -177,9 +191,9 @@ class PizzaBlockRenderer{
                     </div>
                 </div>
 
-                <div>
+                <div class="button-panel">
                     <button type="button" class="btn btn-default reset-pizza-block" aria-label="Trash">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
+                        <span class="glyphicon glyphicon-repeat" aria-hidden="false"></span>
                     </button>
                     <button type="button" class="btn btn-default remove-pizza-block" aria-label="Trash">
                         <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
@@ -252,11 +266,9 @@ class PizzaBlockRenderer{
             //already picked
             return;
         }
-        this.pizza.addIngredient(ingredient);
-
+        this.pizza.addIngredient([ingredient,slice]);
 
         var onIngredientRemove = ((ingredient,slice,slices) => {
-            delete this.pizza.chosenIngredients[ingredient.id];
             this.removeChoosenIngredient(ingredient,slice,slices);
         }).bind(this);
 
@@ -266,8 +278,15 @@ class PizzaBlockRenderer{
     }
 
     removeChoosenIngredient(ingredient,slice,slices){
+        let index = -1;
+        this.pizza.chosenIngredients.forEach((element,i) => {
+            if ((element[0] == ingredient) && (element[1] == slice)) index = i;
+        });
+        this.pizza.chosenIngredients.splice(index,1);
 
+        //remove from pizza preview
         this.pizza_preview.find(`div[name="${ingredient.name}"][data-slice="${slices}_${slice}"]`).remove();
+
 
     }
 
