@@ -198,15 +198,18 @@
     top: 5px;
 }
 
-.btn.add-pizza{
+div>.btn-panel>*{
     margin: 5px 10px;
 }
 
-#menuModal .modal-body{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+#menu-modal .menu_name_select{
+
+    padding: .25em;
+    border: 0;
+    border-bottom: 2px solid #ffb253; 
+    font-weight: normal;
+    letter-spacing: .15em;
+    outline: none;
 }
 
 .myCard{
