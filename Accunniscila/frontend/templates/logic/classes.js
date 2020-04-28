@@ -1,5 +1,6 @@
 class Pizza{
-    constructor(name = "default_name", slices = 1, image_path = "",  chosenIngredients = []){
+    constructor(js_id=0,name = "default_name", slices = 1, image_path = "",  chosenIngredients = []){
+        this.js_id = js_id;
         this.name = name;
         this.slices = slices;
         this.image_path = image_path;
@@ -34,12 +35,24 @@ class Pizza{
 }
 
 class Ingredient{
-    constructor(id, name = "default_name", price = 0, severity=0, image_path = ""){
+    constructor(id, name = "default_name", price = 0, severity=0, image_path = "", nameToShow = "default_nameToShow"){
         this.id = id;
         this.name = name;
+        this.nameToShow = nameToShow;
         this.price = price;
         this.severity = severity;
         this.image_path = image_path;
+    }
+
+    static retrieveIngredients({ onsuccess=()=>{} , onfailure=()=>{}, statusCode={}} = {}){
+        APIrequest(
+            "/menu/api/retrieveIngredients",
+            {
+                onsuccess : onsuccess,
+                onfailure : onfailure,
+                statusCode : statusCode,
+            }
+        )
     }
 }
 
@@ -51,6 +64,29 @@ class Menu{
 
     addPizza(pizza){
         this.pizzas.push(pizza);
+    }
+
+    static retrieveMenu(name,{ onsuccess=()=>{} , onfailure=()=>{}, statusCode={}} = {}){
+        APIrequest(
+            "/menu/api/retrieveMenu",
+            {
+                data : {name : name},
+                onsuccess : onsuccess,
+                onfailure : onfailure,
+                statusCode : statusCode,
+            }
+        )
+    }
+
+    static retrieveAvailableMenus({ onsuccess=()=>{} , onfailure=()=>{}, statusCode={}} = {}){
+        APIrequest(
+            "/menu/api/retrieveAvailableMenus",
+            {
+                onsuccess : onsuccess,
+                onfailure : onfailure,
+                statusCode : statusCode,
+            }
+        )
     }
 }
 

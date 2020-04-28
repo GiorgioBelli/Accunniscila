@@ -3,7 +3,10 @@
 {% block content %}
     <div class="container root">
         
-        <button type="button" class="btn btn-primary btn-lg text-nowrap add-pizza">Aggiungi Pizza</button>
+        <div class="row text-center btn-panel">
+            <button type="button" class="btn btn-primary btn-lg text-nowrap add-pizza">Aggiungi Pizza</button>
+            <button type="button" class="btn btn-primary btn-lg text-nowrap send-order">Aggiungi Ordine</button>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -11,7 +14,14 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <div class="row">
+                    <div class="col-6">
+                     <h3>Menu</h3>
+                    </div>
+                    <div class="col-6">
+                        <select name="menus" id="menus" class="menu_name_select"></select>
+                    </div>
+                  </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
