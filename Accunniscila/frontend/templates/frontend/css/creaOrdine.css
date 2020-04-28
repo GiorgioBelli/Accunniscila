@@ -73,10 +73,24 @@
     justify-content: center;
     align-items: center;
 }
+.pizza_block > .header .button-panel{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pizza_block > .header .button-panel button > .glyphicon{
+    font-size: 20px;
+}
 
 .btn.remove-pizza-block > span{
-    font-size: 20px;
     color: red;
+}
+
+.btn.reset-pizza-block > span{
+    color: #67c0ff;
 }
 
 .pizza_ingredients{

@@ -142,3 +142,7 @@ a, a:hover, a:active, a:visited{
     padding-left: 20px;
     padding-top: 20px;
 }
+
+a:visited{
+    color: #0056b3;
+}
