@@ -1,16 +1,11 @@
 var total_ingredients = [];
 
 var menu_list = [];
+var list = [];
 
 var currentBlockRenderer = null;
 
-// inizialization
-Ingredient.retrieveIngredients({
-        onsuccess : (message)=>{
-            total_ingredients = message.body;
-            PizzasListRender.addPizzaToList($(".root"), list, new Pizza(js_id=list.length));
-        }
-    });
+
 
 Menu.retrieveAvailableMenus({
     onsuccess : (message)=>{
@@ -29,7 +24,20 @@ Menu.retrieveAvailableMenus({
 
 function main() {
 
-    list = [];
+    Ingredient.retrieveIngredients({
+        onsuccess : (message)=>{
+            total_ingredients = message.body;
+            PizzasListRender.addPizzaToList($(".root"), list, new Pizza(js_id=list.length));
+        }
+    });
+
+    $("#datetime").datetimepicker({
+        format: 'd-m-Y H:i', step: 15
+    });
+
+    $("#datetime-icon").click(function(){
+        $("#datetime").focus();
+    });
 
     $(".root").prepend(PizzasListRender.PizzasListRenderer(list));
     $(".btn.add-pizza").click((e) => {
@@ -38,6 +46,10 @@ function main() {
 
     $(".btn.send-order").click((e) => {
         sendOrder(list);
+    });
+
+    $(".btn.order").click((e) => {
+        PizzasListRender.fillModalBody(list);
     });
 
     $("select.menu_name_select").change((e)=>{
@@ -62,7 +74,7 @@ class IngredientRenderer {
         var html_ingredient = $(`
         <div draggable="true" class="picker ingredient" data-id="${ingredient.id}">
             <img  src="${ingredient.image}" alt="">
-            <label for="name">${ingredient.name}</label>
+            <label for="name">${ingredient.nameToShow}</label>
         </div>
         `);
 
@@ -111,7 +123,7 @@ class IngredientRenderer {
                 <img src="${ingredient.image}" alt="">
                 <span class="btn remove-ingredient glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
             </div>
-            <label for="name">${ingredient.name}</label>
+            <label for="name">${ingredient.nameToShow}</label>
         </div>
         `);
 
@@ -127,16 +139,16 @@ class IngredientRenderer {
 
 class PizzaRenderer {
     static createModalMenuCard(pizza, blockRenderer, onClick = (pizza, currentBlockRenderer) => { }) {
-        var card = $(`<div class="myCard container">
+        var card = $(`<div class="myCard menu container">
             <div class="row">
-                <img class="myCard-img col-sm" src="${pizza.image_path}">
-                <div class="myCard-desc col-sm">
+                <img class="myCard-img menu col-sm" src="${pizza.image_path}">
+                <div class="myCard-desc menu col-sm">
                     <h2>${pizza.name}</h2>
                     <p>${pizza.description}</p>
                 </div>
             </div>
             <div class="row">
-                <h2 class="myCard-price col-sm text-left">€ ${pizza.price}</h2>
+                <h2 class="myCard-price menu col-sm text-left">€ ${pizza.price}</h2>
             </div>
         </div>`);
 
@@ -244,7 +256,7 @@ class PizzaBlockRenderer {
     }
 
     htmlPizzaPreview() {
-        return $(`<div class="pizza_preview"></div>`);
+        return $(`<div class="pizza_preview"><div class="priceLabel">0.00€</div></div>`);
     }
 
     htmlPizzaName() {
@@ -278,6 +290,11 @@ class PizzaBlockRenderer {
         this.pizza_preview.append(IngredientRenderer.createPizzaPreviewIngredient(ingredient, slice, slices))
         this.choosen_ingredients.append(IngredientRenderer.ChoosenRender(ingredient, slice, slices, onIngredientRemove));
 
+        this.updatePizzaPrice(this.pizza.price);
+    }
+
+    updatePizzaPrice(price){
+        this.pizza_preview.find(`div.priceLabel`).text(price + "€");
     }
 
     removeChoosenIngredient(ingredient, slice, slices) {
@@ -290,12 +307,13 @@ class PizzaBlockRenderer {
         //remove from pizza preview
         this.pizza_preview.find(`div[name="${ingredient.name}"][data-slice="${slices}_${slice}"]`).remove();
 
-
+        this.updatePizzaPrice(this.pizza.price);
     }
 
     resetPizza() {
         this.pizza.chosenIngredients = [];
-        this.pizza_preview.children().remove();
+        this.updatePizzaPrice(this.pizza.price);
+        this.pizza_preview.children(".ingredient_preview").remove();
         this.choosen_ingredients.children().remove();
     }
 
@@ -371,6 +389,19 @@ class PizzasListRender {
 
         return pizzas_list.map((pizza) => PizzaRenderer.createModalMenuCard(pizza, currentBlockRenderer, onItemClick));
     }
+
+    static fillModalBody(list){    
+        $(".modal-body.confirm").empty();
+        var body = $("<p></p>");
+        body.append("Sicuro di voler procedere con il seguente ordine ?<br><br><br>");
+        for (let index = 0; index < list.length; index++) {
+            const element = list[index];
+            body.append("<h3>" + element.name + " </h3> <h6> (" + element.description + ") </h6> "+ "<h3> " + element.price + " €</h3><br>");
+        }
+        body.append("<br><h3>" + $("#address").val() + " " + $("#datetime").val()+ "</h3>");
+        $(".modal-body.confirm").append(body); 
+    }
+
 }
 
 /**
@@ -383,27 +414,33 @@ class PizzasListRender {
     }
 
     var data = { "user" : "1", 
-                 "withdrawal"  : "Piazza Abbugodaus",
+                 "withdrawal"  : $("#datetime").val(),
+                 "address"  : $("#address").val(),
                  "pizza" : []
             };
     for (let i = 0; i < pizzas.length; i++) {
         const pizza = pizzas[i];
         
         var temp = { "name" : pizza.name,
-                     "totalSlice" : pizza.slices
+                     "totalSlice" : pizza.slices,
+                     "ingredients" : []
                 };
         
-        for (let j = 0; j < pizza.ch.length; j++) {
-            const ingredient = pizza.ingredients[j];
-            
+        for (let j = 0; j < pizza.chosenIngredients.length; j++) {
+            const ingredient = pizza.chosenIngredients[j];
+            temp["ingredients"].push( [ingredient[0].name, ingredient[1]] );
         }
         
-        
-        console.log(pizza);
+        data["pizza"].push( temp );
     }
-    console.log(data);
+    
+    APIrequest(
+        "/order/api/createOrder",
+        {
+            data: data,
+            onsuccess: (data) => console.log(data)
+        }
+    );
  }
- 
-
 
 $(document).ready(main);

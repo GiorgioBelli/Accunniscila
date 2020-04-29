@@ -1,7 +1,7 @@
 {% extends '../frontend/base.html' %}
 
 {% block content %}
-    <div class="form container">
+    <div class="form container login-form">
         <div class="form-logo">
             <a href="http://217.61.121.77:8000" class="btn btn-link text-center">
                 <img src="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/1x/inline_logo.png">
@@ -9,12 +9,12 @@
         </div>
         <div class="row first">
             <div class="col-sm">
-                <input class="form-control form-control-lg" type="text" placeholder="Username o Email">
+                <input class="form-control form-control-lg username" type="text" placeholder="Username">
             </div>
         </div>
         <div class="row last">
             <div class="col-sm">
-                <input class="form-control form-control-lg" type="password" placeholder="Password">
+                <input class="form-control form-control-lg password" type="password" placeholder="Password">
             </div>
         </div>
         <div class="row">
@@ -29,16 +29,16 @@
         </div>
         <div class="row">
             <div class="col-sm mt-0">
-                <div class="mybtn">Login</div>
+                <div class="mybtn btn-login">Login</div>
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/core/css/registration.css">
+    <link rel="stylesheet" type="text/css" href="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/core/css/access.css">
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" src="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/core/js/registration.js"></script>
+    <script type="text/javascript" src="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/core/js/login.js"></script>
 {% endblock %}

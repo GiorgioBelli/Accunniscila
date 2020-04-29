@@ -2,6 +2,7 @@
     display:none;
 }
 
+
 .form{
     top: 15%;
     border-radius: 20px;
@@ -61,6 +62,13 @@
     border-radius: 55px;
 }
 
+.mybtn[disabled]{
+    cursor: not-allowed;
+}
+.mybtn[disabled]{
+    filter: grayscale(1);
+}
+
 .first{
     margin-top: 10% !important;
 }
@@ -77,4 +85,12 @@
         width: 80%;
         height: auto;
     }
+}
+
+.form-control.correct{
+    border-color: #2de00066;
+}
+
+.form-control.incorrect{
+    border-color: #ff3e3e94;
 }

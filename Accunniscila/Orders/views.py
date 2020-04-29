@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.contrib.auth.models import User
 
 
 from Orders.models import Order, OrderStatus
+from Users.models import UserInformation
 from Menu.models import Pizza, Ingredient, Slice, PizzaIngredients
 
 from Utilities.views import EmptyAPIView, AuthAPIView, JsonMessage
@@ -68,9 +68,9 @@ class CreateOrder(AuthAPIView):
                         "name" : pizzaName,
                         "totalSlice" : number,
                         "ingredients" :[
-                            (ingredient_name, slice_number),
+                            [ingredient_name, slice_number],
                             .... ,
-                            (ingredient_name, slice_number)
+                            [ingredient_name, slice_number]
                         ]
                     },
                     .... ,
@@ -78,9 +78,9 @@ class CreateOrder(AuthAPIView):
                         "name" : pizzaName,
                         "totalSlice" : number,
                         "ingredients" :[
-                            (ingredient_name, slice_number),
+                            [ingredient_name, slice_number],
                             .... ,
-                            (ingredient_name, slice_number)
+                            [ingredient_name, slice_number]
                         ]
                     }
                 ]
@@ -91,19 +91,17 @@ class CreateOrder(AuthAPIView):
     def post(self,request):
 
         #try: self.authenticate(request)
-        #except Exception: return JsonResponse("L'Utente non ha effettuato correttamente il LogIn !", safe=False) 
+        #except Exception: return JsonResponse(JsonMessage(status=400,message="L'Utente non ha effettuato correttamente il LogIn !").parse(), safe=False) 
 
         body = json.loads(request.body)
 
-        #if not User.exists(body.get["user"]):
-            #return JsonResponse("L'Utente non esiste !", safe=False) 
-
-        user = User.objects.get(id = body.get("user"))
-
+        user = UserInformation.objects.get(user__username = request.user)
+        
         order = Order()
         order.date = datetime.datetime.now()
         order.client = user
-        order.withdrawal = datetime.datetime.strptime(body.get("withdrawal"), '%m/%d/%y %H:%M:%S')
+        order.withdrawal = datetime.datetime.strptime(body.get("withdrawal"), '%d-%m-%Y %H:%M')
+        order.address = body.get("address")
         order.save()
         
         for pizz in body.get("pizza"):
@@ -116,9 +114,9 @@ class CreateOrder(AuthAPIView):
             for ingredient in pizz.get("ingredients"):
 
                 if not Ingredient.exists(ingredient[0]):
-                    return JsonResponse("Uno degli ingredienti non è registrato nel sistema !", safe=False) 
+                    return JsonResponse(JsonMessage(status=400,message="Uno degli ingredienti non è registrato nel sistema !").parse(), safe=False) 
                 if not Slice.exists(ingredient[1]):
-                    return JsonResponse("Numero di slice non supportato !", safe=False) 
+                    return JsonResponse(JsonMessage(status=400,message="Numero di slice non supportato !").parse(), safe=False) 
 
                 ing = Ingredient.objects.get(name = ingredient[0])
                 sli = Slice.objects.get(number = ingredient[1])
@@ -129,6 +127,5 @@ class CreateOrder(AuthAPIView):
             
             order.pizza.add(pizza) 
     
-        
         order.save()
-        return JsonResponse("Ordine Inserito con successo", safe=False)
+        return JsonResponse(JsonMessage(status=200,message="Ordine Inserito con successo").parse(), safe=False)

@@ -1,4 +1,8 @@
 
+function getCSRFTokenValue(){
+    return $('input[name="csrfmiddlewaretoken"]').val();
+}
+
 function APIrequest(url,{data={}, onsuccess= ()=>{}, onfailure=()=>{}, statusCode= {}, method="POST", dataType="json"}={}){
 
     return $.ajax({
@@ -9,5 +13,6 @@ function APIrequest(url,{data={}, onsuccess= ()=>{}, onfailure=()=>{}, statusCod
         statusCode: statusCode,
         success : onsuccess,
         error : onfailure,
+        headers: { 'X-CSRFToken': getCSRFTokenValue()}
     });
 }

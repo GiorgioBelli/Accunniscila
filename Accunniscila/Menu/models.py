@@ -17,7 +17,7 @@ class Ingredient(models.Model):
     def serialize(ingredient):
         return {
             "name" : ingredient.name,
-            "name_to_show" : ingredient.nameToShow,
+            "nameToShow" : ingredient.nameToShow,
             "price" : ingredient.price,
             "severity" : ingredient.severity,
             "image" : ingredient.image

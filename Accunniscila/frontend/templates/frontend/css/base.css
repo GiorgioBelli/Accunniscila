@@ -3,7 +3,7 @@
     height: 50px;
 }
 
-a, a:hover, a:active, a:visited{
+a, a:hover, a:active{
     text-decoration: none;
     outline: none;
     color: white;
@@ -34,6 +34,12 @@ a, a:hover, a:active, a:visited{
         color: white;
         user-select: none;
     }
+}
+
+.page-header .nav-item{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .myfooter{
@@ -151,4 +157,8 @@ footer a:hover, footer a:active, footer a:visited{
     text-decoration: none;
     outline: none;
     color: white;
+}
+
+.page-haeder .profile-dropdown{
+    background-color: #78c1ff;
 }

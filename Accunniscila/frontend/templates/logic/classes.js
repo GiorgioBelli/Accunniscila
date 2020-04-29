@@ -18,19 +18,18 @@ class Pizza{
     get description(){
         var description = "";
         $.each( this.chosenIngredients, function( key, value ) {
-            description += value.name + ", ";
-            //description += value[0].name + ", ";
+            description += value[0].name + ", ";
         });
         return description.slice(0, -2);
     }
 
     calcPrice(){
         var sum = 0;
+        var slices = parseInt(this.slices);
         $.each( this.chosenIngredients, function( key, value ) {
-            sum += value.price;
-            //sum += key + ": " + value[0].price;
+            sum += value[0].price / slices;
         });
-        return sum;
+        return sum.toFixed(2);
     }
 }
 

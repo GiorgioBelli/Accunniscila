@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
-
 from django.http import HttpResponse
 import json
 
+from django.views import View
+
+from django.contrib.auth import get_user
+
 
 # Create your views here.
-class EmptyAPIView(APIView):
+class EmptyAPIView(View):
     def get(self,request):
         return HttpResponse("non e' possibile richiedere questa pagina tramite get")
     def head(self,request):
@@ -22,12 +24,16 @@ class EmptyAPIView(APIView):
     def connect(self,request):
         return HttpResponse("non e' possibile richiedere questa pagina tramite connect")
 
+
+class NoAuthAPIView(EmptyAPIView):
+
+    def not_authenticated(self, request):
+        return not request.user.is_authenticated
+
 class AuthAPIView(EmptyAPIView):
 
-    def authenticate(self, request):
-        # auth procedure #
-        if(not request.user.is_authenticated): raise Exception("The user is not logged in")
-        return True
+    def authenticated(self, request):
+        return request.user.is_authenticated
 
 
 class JsonMessage():

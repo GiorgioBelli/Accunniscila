@@ -2,6 +2,7 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
+import re
 
 # Create your models here.
 '''
@@ -9,14 +10,12 @@ from django.contrib.auth.models import User
 '''
 class UserInformation(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    address = models.CharField(max_length=25)
     phone = models.CharField(max_length=10)
 
     '''Serializza il modello per la conversione in json'''
     @staticmethod
     def serialize(user_info):
         serialization = {
-            "address" : user_info.address,
             "phone" : user_info.phone,
         }
 
@@ -28,4 +27,15 @@ class UserInformation(models.Model):
 
         return serialization
 
-        
+    '''Valida criteri minimi username'''
+    @staticmethod
+    def validateUsernameCriteria(username):
+        return re.match("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$",username)
+
+    '''Valida criteri minimi password'''
+    def validatePassworCriteria(password):
+        return re.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$",password) # almeno 1 upper letter, 1 lower letter, 1 number , minimo 8 caratteri
+
+    '''Valida criteri minimi email'''
+    def validateEmailCriteria(email):
+        return re.match("^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",email)

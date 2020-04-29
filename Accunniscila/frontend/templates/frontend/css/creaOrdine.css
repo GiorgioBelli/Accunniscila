@@ -55,7 +55,7 @@
     background-repeat: no-repeat;
 }
 
-.pizza_name{
+.pizza_name, .address, .dateTime{
     border-bottom: 1px solid lightgray;
     text-align: center;
     text-decoration: none;
@@ -164,12 +164,10 @@
     min-height: 100px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
 
     border-radius: 10px;
 
     overflow-x: auto;
-    /* margin-top: 50px; */
 }
 
 .picker.ingredient:hover{
@@ -193,6 +191,10 @@
     /* box-shadow: 0px 10px 9px -4px grey; */
 }
 
+.picker.ingredient > label {
+    white-space: nowrap;
+}
+
 .ingredient_slice_selector{
     position: absolute;
     top: 5px;
@@ -212,39 +214,90 @@ div>.btn-panel>*{
     outline: none;
 }
 
-.myCard{
+.myCard.menu{
     width: 90%;
 }
 
-.myCard .row{
+.myCard.menu .row{
     text-align: center !important;
 }
 
 
-.myCard:hover{
+.myCard.menu:hover{
     border: 1px solid #c0e0ff;
     box-shadow: 2px 1px 20px 10px #dcecfb;
     cursor: pointer;
 }
 
-@media only screen and (min-width: 768px) {
+.myCard.withdrawal{
+    margin-top: 5%;
+    width: 100%;
+}
 
-    .myCard .row{
+.address{
+    position: relative;
+    width: 100%;
+    margin: 3% 2% 3% 10%;
+}
+
+.dateTime{
+    position: relative;
+    width: 70%;
+    margin: 3% 2% 3% 2%;
+}
+
+#datetime-icon{
+    margin: 3% 10% 3% 0%;
+    cursor: pointer;
+}
+
+.address::placeholder, .dateTime::placeholder{
+    text-align: center;
+}
+
+.dateTime::disabled{
+    background: #ffffff;
+    opacity: 1;
+}
+
+.confirm>p>*{
+    display: inline-block;
+}
+
+.priceLabel{
+    position: absolute;
+    bottom: -15%;
+    right: 5%;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+}
+
+@media only screen and (min-width: 767px) {
+
+    .myCard.menu .row{
         text-align: left !important;
     }
 
-    .myCard-desc{
+    .myCard-desc.menu{
         width: 50%;
     }
 
-    .myCard-img{
+    .myCard-img.menu{
         width: 50%;
     }
 
-    .myCard-price{
+    .myCard-price.menu{
         color: #333333 !important;
         text-align: right !important;
         padding: 0px;
         padding-right: 20px;
+    }
+
+    .address{
+        margin: 3% 2% 3% 5%;
+    }
+
+    #datetime-icon{
+        margin-right: 5%;
     }
 }

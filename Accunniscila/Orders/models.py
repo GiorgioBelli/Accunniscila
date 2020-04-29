@@ -40,6 +40,7 @@ class Order(models.Model):
     client = models.ForeignKey(UserInformation,on_delete=models.CASCADE)
     pizza = models.ManyToManyField(Pizza)
     withdrawal = models.DateTimeField()
+    address = models.CharField(max_length=25)
 
     '''Serializza il modello per la conversione in json'''
     @staticmethod
@@ -49,6 +50,7 @@ class Order(models.Model):
             "date" : order.date,
             "status" : order.status,
             "withdrawal" : order.withdrawal,
+            "address" : order.address
         }
 
 
