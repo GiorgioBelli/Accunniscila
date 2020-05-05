@@ -18,7 +18,7 @@ class Pizza{
     get description(){
         var description = "";
         $.each( this.chosenIngredients, function( key, value ) {
-            description += value[0].name + ", ";
+            description += value[0].nameToShow + ", ";
         });
         return description.slice(0, -2);
     }
@@ -30,6 +30,29 @@ class Pizza{
             sum += value[0].price / slices;
         });
         return sum.toFixed(2);
+    }
+
+    static getDescription(pizza){
+        let ing_names = pizza.chosenIngredients.map((p_ingredient)=> p_ingredient.ingredient.nameToShow);
+        return ing_names.join(", ");
+    }
+
+    static calcPrice(pizza){
+        return pizza.chosenIngredients.reduce((sum, p_ingredient) => sum+parseFloat(p_ingredient.ingredient.price),0.0);
+    }
+}
+
+class Order{
+    static formattedWithdrawal(withdrawal){
+        let date = new Date(Date.parse(withdrawal));
+
+        let minutes = date.getUTCMinutes();
+        if( minutes == '0' ) minutes = "00";
+
+        let time = date.getUTCHours()+":"+minutes;
+        let day = date.getUTCDate()+"/"+(date.getUTCMonth()+1)+"/"+date.getUTCFullYear();
+
+        return day+" "+time;
     }
 }
 

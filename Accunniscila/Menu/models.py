@@ -12,7 +12,7 @@ class Ingredient(models.Model):
     severity = models.IntegerField(null=False, default=0)
     image = models.CharField(max_length=200, null=False)
 
-    '''Serializza il modello per la conversione in json'''
+    #Serializza il modello per la conversione in json
     @staticmethod
     def serialize(ingredient):
         return {
@@ -23,7 +23,7 @@ class Ingredient(models.Model):
             "image" : ingredient.image
         }
 
-    '''Metodo che verifica l'esistenza di un ingrediente con il nome specificato'''
+    #Metodo che verifica l'esistenza di un ingrediente con il nome specificato
     @staticmethod
     def exists(name):
         try:
@@ -73,7 +73,7 @@ class PizzaIngredients(models.Model):
     Classe che modella una Pizza
 '''
 class Pizza(models.Model):
-    name = models.CharField(primary_key=True, max_length=50, null=False)
+    name = models.CharField(max_length=51, null=False)
     image = models.CharField(max_length=200, null=True)
     totalSlices = models.IntegerField(default=1)
     pizzaIngredients = models.ManyToManyField(PizzaIngredients)

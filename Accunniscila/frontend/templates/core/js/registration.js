@@ -1,14 +1,7 @@
-var blocked = true;
-
 function main() {
     let btn_register = $(".btn-register");
 
-    btn_register.click((e)=>console.log("click"));
-
-    // $(".registration-form .username").focusout((e)=>{
-    //     console.log("username out");
-    //     validationFeedback($(e.target).val(),validateUsername);
-    // });
+    btn_register.click(submitRegistration);
 
     //format validation
     $(".registration-form .password").focusout((e)=>{
@@ -17,44 +10,48 @@ function main() {
     });
 
     $(".registration-form .email").focusout((e)=>{
-        console.log("email out");
         validationFeedback($(e.target),$(e.target).val(),validateEmail);
-  
     });
 
     $(".registration-form .first_name").focusout((e)=>{
-        console.log("first_name out");
         validationFeedback($(e.target),$(e.target).val(),validateNoSpace);
-
     });
 
     $(".registration-form .last_name").focusout((e)=>{
-        console.log("last_name out");
         validationFeedback($(e.target),$(e.target).val(),validateNoSpace);
+    });
 
+    $(".registration-form .phone_number").focusout((e)=>{
+        validationFeedback($(e.target),$(e.target).val(),validateNumber);
     });
 
     //confirm password validation
     $(".registration-form .password_confirm").focusout((e)=>{
-        let p1 = $(e.target).val();
-        let p2 = $(".registration-form .password").val();
-        validationFeedback($(e.target),$(e.target).val(),()=> p1==p2 ));
+        var p1 = $(e.target).val();
+        var p2 = $(".registration-form .password").val();
+        validationFeedback($(e.target),null,()=> validateConfirmPassword(p1,p2) );
     });
 
 }
 
 function submitRegistration(e) {
+    $(e.target).prop("disabled");
+    
+    if($(".registration-form .correct").length != 6 || $(".registration-form .incorrect").length!=0){
+        alert("fields error");
+        return;
+    }
 
-    username = $(".registration-form .username").val();
     first_name = $(".registration-form .first_name").val();
     last_name = $(".registration-form .last_name").val();
     email = $(".registration-form .email").val();
     password = $(".registration-form .password").val();
+    phone_number = $(".registration-form .phone_number").val();
 
     APIrequest(
-        "/user/api/registration",
+        "/user/api/register",
         {
-            data: { username: username, password: password },
+            data: { first_name: first_name, last_name: last_name, email: email, password: password, phone_number: phone_number },
             statusCode: {
                 200: function (responseObject, textStatus, jqXHR) {
                     window.location.href = "http://217.61.121.77:8000";
@@ -68,31 +65,30 @@ function submitRegistration(e) {
 
 }
 
-// function validateUsername(username){
-//     return true;
-//     let reg = RegExp("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$");
-//     return reg.test(username);
-// } 
 
 function validatePassword(password){
-    return true;
-    let reg = RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$");
+    let reg = RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$");
     return reg.test(password);
 } 
 
-function validateConfirmPassword(pw1,pwd2){
-    return pw1 == pw1;
+function validateConfirmPassword(pw1,pw2){
+    return pw1 == pw2 && validatePassword(pw1);
 } 
 
 
 function validateEmail(email){
-    let reg = RegExp("^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+    let reg = RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     return reg.test(email);
 }
 
+function validateNumber(number){
+    let reg = RegExp("^[0-9]{10}$");
+    return reg.test(number);
+}
+
 function validateNoSpace(string){
-    let reg = RegExp("^[^ ]*{2,50}");
-    return reg.test(email);
+    let reg = RegExp("^[^ ]{2,50}$");
+    return reg.test(string);
 }
 
 function validationFeedback(target,value,validationFunction){
@@ -101,8 +97,8 @@ function validationFeedback(target,value,validationFunction){
         target.addClass("correct");
         target.removeClass("incorrect");
     }else{
-        target.addClass("correct");
-        target.removeClass("incorrect");
+        target.addClass("incorrect");
+        target.removeClass("correct");
     }
 }
 

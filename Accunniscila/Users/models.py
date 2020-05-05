@@ -38,4 +38,5 @@ class UserInformation(models.Model):
 
     '''Valida criteri minimi email'''
     def validateEmailCriteria(email):
-        return re.match("^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",email)
+        # return re.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",email)
+        return True

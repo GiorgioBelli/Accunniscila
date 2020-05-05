@@ -1,0 +1,149 @@
+function main(){
+
+    getDetails();
+
+}
+
+
+function getDetails(){
+    id = $("#root").data("order_id");
+    console.log(id);
+
+    APIrequest(
+        "/order/api/orders/" + id,
+        {
+            statusCode: {
+                200: (data) => PageRenderer.render(data),
+                400: (data) => AlertRenderer.render(400, data.responseJSON["result_msg"], "order"),
+            }
+        }
+    );
+}
+
+function updateStatus(newStatus){
+    id = $("#root").data("order_id");
+
+    APIrequest(
+        "/order/api/orders/" + id + "/update",
+        {
+            data : {"status": newStatus},
+            onsuccess: (data) => OrderInfoRenderer.render("", "", "", newStatus, true)
+        },
+    );
+}
+
+class PageRenderer{
+    static render(data){
+        console.log(data["result_msg"])
+        var address = data["body"]["address"];
+        var client = data["body"]["client"]["user"]["firstname"] + " " + data["body"]["client"]["user"]["lastname"]; 
+        var withdrawal = data["body"]["withdrawal"];
+        var status = data["body"]["status"];
+        var pizzas = data["body"]["pizzas"];
+        
+        OrderInfoRenderer.render(address, client, withdrawal, status, false);
+
+        for(let c=0; c<pizzas.length; c++){
+            var ingredients = [];
+            for(let i=0; i<pizzas[c]["chosenIngredients"].length; i++){
+
+                var temp = pizzas[c]["chosenIngredients"][i]["ingredient"];
+                var slice = pizzas[c]["chosenIngredients"][i]["slice"]["number"];
+
+                ingredients.push( [new Ingredient(i, temp["name"], temp["price"], temp["severity"], temp["image"], temp["nameToShow"]), slice] );
+            }
+
+            var pizza = new Pizza(c, pizzas[c]["name"], pizzas[c]["slices"], pizzas[c]["image_path"], ingredients);
+            PizzaRenderer.render(pizza);
+        }
+    }
+}
+
+class OrderInfoRenderer{
+    static render(address, client, withdrawal, status, onlyState){
+        
+        if( !onlyState ){
+            $("#address").html(address);
+            $("#client").html(client);
+            $("#datetime").html(Order.formattedWithdrawal(withdrawal));
+        }
+
+        var nextStatus = "W";
+        switch (status) {
+            case "P":
+                $("#status").html("Pending");
+                break;
+            case "W":
+                $("#status").html("Working");
+                nextStatus = "C";
+                break;
+            case "C":
+                $("#status").html("Completed");
+                nextStatus = "NoNextStatus";
+                break;
+            default:
+                break;
+        }
+
+        switch (nextStatus) {
+            case "W":
+            case "C":
+                $("#nextStatus").unbind();
+                $("#nextStatus").on("click", function(){
+                    updateStatus(nextStatus);
+                });
+                break;
+            case "NoNextStatus":
+                $("#nextStatus").unbind();
+                $("#nextStatus").css("color", "#818882");
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+class PizzaRenderer{
+    static render(pizza){
+        var row = $(`<div class="row justify-content-center align-items-center"></div>`);
+        var card = $(`<div class="row myCard pizza"></div>`);
+
+        var col1 = $(`<div class="col-sm-5 text-left"></div>`);
+        var col2 = $(`<div class="col-sm-7"></div>`);
+
+        var pizza_name = $(`<h3 class="pizza_name"></h3>`).append(pizza.name);
+        var pizza_preview = $(`<div class="pizza_preview"></div>`);
+
+        for(let c=0; c<pizza.chosenIngredients.length; c++){
+            pizza_preview.append( IngredientRenderer.render(pizza.chosenIngredients[c][0], pizza.chosenIngredients[c][1], pizza.slices) );
+        }
+
+        var pizza_description = $(`<div class="pizza_description text-center"></div>`).append(pizza.description);
+        var pizza_price = $(`<div class="pizza_price text-right"></div>`).append($("<h3></h3>").append("€ " + pizza.price));
+
+        col1.append(pizza_name);
+        col1.append(pizza_preview);
+
+        col2.append(pizza_description);
+        col2.append(pizza_price);
+
+        card.append(col1);
+        card.append(col2);
+        row.append(card);
+        $("body>div.container").append(row);
+    }
+}
+
+class IngredientRenderer{
+    static render(ingredient, slice, slices){
+        var ingredient_preview = $(`<div name="${ingredient.name}" data-slice="${slices}_${slice}" class="ingredient_preview"></div>`);
+        ingredient_preview.css("z-index", ingredient.severity);
+        if (slice == null) slice = 1;
+        ingredient_preview.css("background-image", `url(http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/${ingredient.name}/${ingredient.name}_${slices}_${slice}.png)`)
+
+        return ingredient_preview;
+    }
+}
+
+
+$(document).ready(main);

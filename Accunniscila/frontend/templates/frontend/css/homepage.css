@@ -56,3 +56,10 @@
 .content-item>*>p{
     color: #929292;
 }
+
+@media only screen and (max-width: 640px) {
+    .myheader{
+        background-size: unset;
+        height: 90px;
+    }
+}

@@ -1,0 +1,103 @@
+.myCard.withdrawal{
+    margin-top: 2%;
+    width: 70%; 
+}
+
+.myCard.pizza{
+    width: 80%; 
+}
+
+.myCard.withdrawal>.row{
+    padding: 10px 15px 10px 15px;
+}
+
+body>.container>div{
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    margin: 0px;
+
+    font-family: 'Oswald', sans-serif;
+}
+
+.material-icons{
+    font-size: 21px;
+    color: #1565c0;
+    user-select: none;
+}
+
+.myCard-info{
+    display:flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-left: 15px;
+}
+
+.myCard-info:not(:last-child){
+    padding-bottom: 10px;
+}
+
+.text-inTheMiddle{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.nextState{
+    font-size: 40px;
+    padding-right: 15px;
+    color: #15c01d;
+    cursor: pointer;
+}
+
+.pizza_name{
+    margin-top: 10%;
+    margin-left: 5%;
+}
+
+.pizza_description{
+    position: relative;
+    top: 50%;
+}
+
+.pizza_price{
+    position: relative;
+    top: 72%;
+}
+
+.pizza_preview{
+    height: 125px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+@media only screen and (max-width: 767px) {
+    .myCard.withdrawal{
+        margin-top: 5%;
+        width: 100%; 
+    }
+
+    .nextState{
+        font-size: 30px;
+    }
+
+    .myCard.pizza{
+        width: 100%; 
+    }
+
+    .pizza_preview{
+        height: 100px;
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    .pizza_price{
+        position: relative;
+        top: 2%;
+    }
+
+    .pizza_description{
+        position: relative;
+        top: 2%;
+    }
+}

@@ -3,6 +3,10 @@
     margin-bottom: 10px !important;
 }
 
+.myCard{
+    width: 70%;
+}
+
 .menu > .row{
     text-align: -webkit-center !important;
 }

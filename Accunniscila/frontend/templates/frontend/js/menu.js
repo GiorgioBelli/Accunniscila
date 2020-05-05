@@ -1,41 +1,21 @@
+
 function main(){
-    mushroom = new Ingredient(
-        1,
-        "mushroom",
-        3,
-        3,
-        "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
-        );
-    potato = new Ingredient(
-        2,
-        "potato",
-        2,
-        2,
-        "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
-        );
-    tomato = new Ingredient(
-        3,
-        "tomato",
-        5,
-        1,
-        "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
-        );
-    olives = new Ingredient(
-        4,
-        "olives",
-        10,
-        3,
-        "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
-        );
 
-    pizza1 = new Pizza("nome1",1,"http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/pizza.png",[mushroom,potato,tomato]);
-    pizza2 = new Pizza("nome2",1,"http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/pizza.png",[olives,potato,tomato]);
-    pizza3 = new Pizza("nome3",1,"http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/pizza.png",[olives,potato,tomato]);
-    pizza4 = new Pizza("nome4",1,"http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/pizza.png",[olives,potato,tomato]);
 
-    menuz = new Menu(name = "menu1", pizzas = [pizza1, pizza2, pizza3, pizza4]); 
+    Menu.retrieveAvailableMenus({
+        onsuccess : (message)=>{
+            menu_list = message.body;
 
-    $(".base").append(MenuRenderer.render(menuz))
+            console.log(menu_list);
+    
+            $("#menu-modal .modal-header .menu_name_select").append(
+                menu_list.map((menu,index)=> $(".base").append(MenuRenderer.render(menu)))
+            );
+        }
+    })
+
+
+
 }
 
 class MenuRenderer{

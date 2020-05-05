@@ -5,8 +5,6 @@ var list = [];
 
 var currentBlockRenderer = null;
 
-
-
 Menu.retrieveAvailableMenus({
     onsuccess : (message)=>{
         menu_list = message.body;
@@ -58,8 +56,6 @@ function main() {
         $("#menu-modal .modal-body").children().remove();
         $("#menu-modal .modal-body").append(PizzasListRender.createModalMenuList(menu_list[sel_opt.attr("data-listindex")]));
     });
-
-    
 }
 
 /**
@@ -139,16 +135,17 @@ class IngredientRenderer {
 
 class PizzaRenderer {
     static createModalMenuCard(pizza, blockRenderer, onClick = (pizza, currentBlockRenderer) => { }) {
+
         var card = $(`<div class="myCard menu container">
             <div class="row">
                 <img class="myCard-img menu col-sm" src="${pizza.image_path}">
                 <div class="myCard-desc menu col-sm">
                     <h2>${pizza.name}</h2>
-                    <p>${pizza.description}</p>
+                    <p>${Pizza.getDescription(pizza)}</p>
                 </div>
             </div>
             <div class="row">
-                <h2 class="myCard-price menu col-sm text-left">€ ${pizza.price}</h2>
+                <h2 class="myCard-price menu col-sm text-left">€ ${Pizza.calcPrice(pizza)}</h2>
             </div>
         </div>`);
 
@@ -422,7 +419,7 @@ class PizzasListRender {
         const pizza = pizzas[i];
         
         var temp = { "name" : pizza.name,
-                     "totalSlice" : pizza.slices,
+                     "totalSlices" : pizza.slices,
                      "ingredients" : []
                 };
         
@@ -438,7 +435,11 @@ class PizzasListRender {
         "/order/api/createOrder",
         {
             data: data,
-            onsuccess: (data) => console.log(data)
+            statusCode: {
+                200: (data) => AlertRenderer.render(200, data["message"], "order"),
+                400: (data) => AlertRenderer.render(400, data["message"], "order"),
+            }
+
         }
     );
  }

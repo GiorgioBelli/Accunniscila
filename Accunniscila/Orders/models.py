@@ -12,7 +12,7 @@ class OrderStatus():
     
     PENDING='P'
     WORKING='W'
-    COMPLETED='C' 
+    COMPLETED='C'
 
     @staticmethod
     def as_enum():
@@ -26,9 +26,11 @@ class OrderStatus():
 
     @staticmethod
     def is_valid(value):
-        return value in OrderStatus.as_list()
-
-
+        if(value in OrderStatus.as_list()):
+            if(value.lower() == OrderStatus.PENDING.lower()): return OrderStatus.PENDING
+            elif(value.lower() == OrderStatus.WORKING.lower()): return OrderStatus.WORKING
+            elif(value.lower() == OrderStatus.COMPLETED.lower()): return OrderStatus.COMPLETED
+        else: return None
 
 # Create your models here.
 '''

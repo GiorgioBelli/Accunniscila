@@ -34,27 +34,6 @@
 
 }
 
-.pizza_preview{
-    position: relative;
-    width: 100%;
-    height: 250px;
-    z-index: 0;
-
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url("http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/pizza_bianca.png");
-}
-
-.ingredient_preview{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
 .pizza_name, .address, .dateTime{
     border-bottom: 1px solid lightgray;
     text-align: center;

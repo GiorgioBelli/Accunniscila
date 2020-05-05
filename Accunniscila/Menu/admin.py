@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Ingredient, Slice, PizzaIngredients, Pizza, Menu
+from .models import Slice, PizzaIngredients, Pizza, Menu, Ingredient
 
 admin.site.register(Ingredient)
 admin.site.register(Slice)

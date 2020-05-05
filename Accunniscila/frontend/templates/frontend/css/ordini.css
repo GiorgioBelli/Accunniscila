@@ -1,0 +1,82 @@
+.orders_list{
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+.myCard.order{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 300px;
+
+    padding-top: 10px;
+}
+
+.myCard-client{
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.myCard-body{
+    width: 100%;
+    padding-top: 15px;
+}
+
+.myCard-body > .row{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 20px 0px;
+}
+
+.myCard-body > .row.last{
+    margin-bottom: 5px;
+}
+
+.myCard-body > .row.last{
+    margin-top: 5px;
+}
+
+.myCard-body > .row.single{
+    justify-content: space-between;
+}
+
+.myCard-body > .row.multi{
+    justify-content: space-between;
+}
+
+.myCard-info.icon-label{
+    display:flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.myCard-info.icon-label > label[for=text]{
+    margin: 0px;
+}
+
+.myCard-info.icon-label > .material-icons{
+    font-size: 21px;
+    color: #1565c0;
+}
+
+.myCard-body .btn.order-details{
+    align-self: right;
+    width: 100%;
+}
+
+/* @media only screen and (max-width: 768px) {
+    .myCard.order{
+        width: 50%;
+    }
+} */
+
+@media only screen and (max-width: 575px) {
+    .myCard.order{
+        width: 95%;
+    }
+}

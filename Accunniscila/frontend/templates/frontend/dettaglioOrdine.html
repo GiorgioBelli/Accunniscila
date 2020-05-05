@@ -1,0 +1,52 @@
+{% extends '../frontend/base.html' %}
+
+{% block content %}
+<div class="container" id="root" data-order_id="{{order_id}}">    
+    <div class = "row justify-content-center align-items-center">
+        <div class="myCard withdrawal">
+            <div class="row">
+                <div class="col">
+                    <div class="row  myCard-info">
+                        <i class="material-icons">person_pin_circle</i>
+                        <label for="text" id="address"></label>
+                    </div>
+                    <div class="row  myCard-info">
+                        <i class="material-icons">person_pin</i>
+                        <label for="text" id="client"></label>
+                    </div>                
+                </div>
+                <div class='col'>
+                    <div class="row  myCard-info">
+                        <i class="material-icons">access_time</i>
+                        <label for="text" id="datetime"></label>
+                    </div>
+                    <div class="row  myCard-info">
+                        <i class="material-icons">hourglass_empty</i>
+                        <label for="text" id="status"></label>
+                    </div>
+                </div>
+                {% if user.is_staff %}
+                    <div class="col-auto text-inTheMiddle">
+                        <div class="row">
+                            <i class="material-icons nextState" id="nextStatus">offline_pin</i>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="result_alert"></div>
+    
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/frontend/css/dettaglioOrdine.css">
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <script type="text/javascript" src="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/frontend/js/dettaglioOrdine.js"></script>
+{% endblock %}
+ 

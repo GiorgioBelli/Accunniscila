@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import json
 
 from django.views import View
@@ -24,6 +24,19 @@ class EmptyAPIView(View):
     def connect(self,request):
         return HttpResponse("non e' possibile richiedere questa pagina tramite connect")
 
+    def getRequestUrl(self,request):
+        protocol = "https" if request.is_secure() else "http"
+        requester_page = protocol+"://"+request.get_host()+request.get_full_path()
+
+        return requester_page
+
+    def getRootUrl(self,request):
+        protocol = "https" if request.is_secure() else "http"
+        root_page = protocol+"://"+request.get_host()
+
+        return root_page
+
+
 
 class NoAuthAPIView(EmptyAPIView):
 
@@ -35,14 +48,8 @@ class AuthAPIView(EmptyAPIView):
     def authenticated(self, request):
         return request.user.is_authenticated
 
-
-class JsonMessage():
-    def __init__(self,status=200, message="OK", body={}):
-        self.status = status
-        self.message = message
-        self.body = body
-
-    def parse(self):
-        return {"status" : self.status, "message" : self.message, "body" : self.body}
+class JsonMessage(JsonResponse):
+    def __init__(self,status=200, result_msg="OK", body={}):
+        super().__init__(status=status,data={"result_msg":result_msg,"body":body},safe=False)
 
 

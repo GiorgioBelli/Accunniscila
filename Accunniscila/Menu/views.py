@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
 from Utilities.views import EmptyAPIView, AuthAPIView, JsonMessage
-from .models import Ingredient, Menu, Pizza
+from .models import Menu, Pizza, Ingredient
 
-from django.http import JsonResponse
+from django.http import HttpResponse
 
 import json
 
@@ -17,12 +17,10 @@ class RetrieveIngredients(AuthAPIView):
         for ingredient in ingredients:
             data.append(Ingredient.serialize(ingredient))
 
-        return JsonResponse(
-            JsonMessage(body=data).parse(),
-            safe=False
-        )
+        return JsonMessage(body=data)
 
 class RetrieveMenu(EmptyAPIView):
+
     def post(self,request):
 
         body = json.loads(request.body)
@@ -31,9 +29,9 @@ class RetrieveMenu(EmptyAPIView):
 
         try: Menu.exists(name)
         except Exception:
-            return JsonResponse(
-                JsonMessage(status="404",message="Un'able to find menu {}".format(name)).parse(),
-                safe=False
+            return JsonMessage(
+                status="404",
+                result_msg="Un'able to find menu {}".format(name)
                 )
 
 
@@ -43,10 +41,7 @@ class RetrieveMenu(EmptyAPIView):
         for pizza in menu_pizzas.pizzas:
             data.append(Pizza.serialize(pizza))
 
-        return JsonResponse(
-            JsonMessage(body=data).parse(),
-            safe=False
-        )
+        return JsonMessage(body=data)
 
 class RetrieveAvailableMenus(EmptyAPIView):
     def post(self,request):
@@ -56,7 +51,98 @@ class RetrieveAvailableMenus(EmptyAPIView):
         for menu in menus:
             data.append(Menu.serialize(menu))
 
-        return JsonResponse(
-            JsonMessage(body=data).parse(),
-            safe=False
-        )
+        return JsonMessage(body=data)
+
+
+class FillMenu(EmptyAPIView):
+    def get(self,request):
+        
+        ingredients= json.loads('''[
+                                {
+                                    "name" : "mushroom",
+                                    "price" : 2.0,
+                                    "severity" : 3,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "mushroom"
+                                },
+                                {
+                                    "name" : "potato",
+                                    "price" : 2.0,
+                                    "severity" : 2,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "potato"
+                                },
+                                    {
+                                    "name" : "tomato",
+                                    "price" : 5.0,
+                                    "severity" : 1,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "tomato"
+                                },
+                                {
+                                    "name" : "olives",
+                                    "price" : 2.0,
+                                    "severity" : 3,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "olives"
+                                },
+                                {
+                                    "name" : "wurstel",
+                                    "price" : 4.0,
+                                    "severity" : 5,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "wurstel"
+                                },
+                                {
+                                    "name" : "fried_potatoes",
+                                    "price" : 5.0,
+                                    "severity" : 3,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "fried potatoes"
+                                },
+                                {
+                                    "name" : "mozzarella",
+                                    "price" : 0.5,
+                                    "severity" : 2,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "mozzarella"
+                                }
+                            ]''')
+
+        ingredients= json.loads('''[
+                                {
+                                    "name" : "radicchio",
+                                    "price" : 2.0,
+                                    "severity" : 3,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "radicchio"
+                                },
+                                {
+                                    "name" : "zucchini",
+                                    "price" : 2.0,
+                                    "severity" : 3,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "zucchine"
+                                },
+                                    {
+                                    "name" : "salami",
+                                    "price" : 5.0,
+                                    "severity" : 1,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "salame"
+                                },
+                                {
+                                    "name" : "bacon",
+                                    "price" : 2.0,
+                                    "severity" : 3,
+                                    "image" : "http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Resources/Images/condimenti/funghi.png",
+                                    "nameToShow" : "bacon"
+                                }
+                            ]''')
+
+        data = []
+        for ingredient in ingredients:
+            i = Ingredient.objects.create(name=ingredient.get("name"),nameToShow=ingredient.get("nameToShow"),price=ingredient.get("price"), severity=ingredient.get("severity"),image = ingredient.get("image"))
+            i.save()
+
+        return HttpResponse("OK")

@@ -3,21 +3,25 @@ function main(){
 }
 
 function submitLogin(e){
+
+    let target = $(e.target);
+    target.prop("disabled");
     
-    username = $(".login-form .username").val();
+    email = $(".login-form .email").val();
     password = $(".login-form .password").val();
+    remember_me = $(".login-form .form-check input.remember_me").prop("checked");
 
     APIrequest(
         "/user/api/login",
         {
-            data: {username: username, password:password},
+            data: {email: email, password:password, remember_me: remember_me},
             statusCode: {
                 200: function(responseObject, textStatus, jqXHR) {
-                    window.location.href = "http://217.61.121.77:8000";
+                    window.location.href = target.attr("data-page-target");
 
                 },
                 400: function(responseObject, textStatus, errorThrown) {
-                    console.log(responseObject);
+                    $("label[for=error_message]").text("*"+responseObject.responseJSON.result_msg);
                 }           
             }
         }
