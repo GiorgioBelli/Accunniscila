@@ -12,18 +12,6 @@ class Pizza{
     }
 
     get price(){
-        return this.calcPrice();
-    }
-
-    get description(){
-        var description = "";
-        $.each( this.chosenIngredients, function( key, value ) {
-            description += value[0].nameToShow + ", ";
-        });
-        return description.slice(0, -2);
-    }
-
-    calcPrice(){
         var sum = 0;
         var slices = parseInt(this.slices);
         $.each( this.chosenIngredients, function( key, value ) {
@@ -32,13 +20,50 @@ class Pizza{
         return sum.toFixed(2);
     }
 
+    get description(){
+        var description = {};
+        $.each( this.chosenIngredients, function( key, value ) {
+            if( description[value[1]] ) description[value[1]].push(value[0].nameToShow);
+            else  description[value[1]] = [value[0].nameToShow];
+        });
+        var desc = "";
+        for(var key in description){
+            desc += key + ":" + description[key].join(", ") + " <br>";
+        }
+        return desc;
+    }
+
     static getDescription(pizza){
-        let ing_names = pizza.chosenIngredients.map((p_ingredient)=> p_ingredient.ingredient.nameToShow);
-        return ing_names.join(", ");
+        var description = {};
+        $.each( pizza.chosenIngredients, function( key, value ) {
+            if( description[value.slice.number] ) description[value.slice.number].push(value.ingredient.nameToShow);
+            else  description[value.slice.number] = [value.ingredient.nameToShow];
+        });
+        var desc = "";
+        for(var key in description){
+            desc += key + ":" + description[key].join(", ") + " <br>";
+        }
+        for (let i = 0; i < 3 - Object.keys(description).length; i++) {
+            desc += "<br>";    
+            console.log(desc);        
+        }
+        return desc;
     }
 
     static calcPrice(pizza){
-        return pizza.chosenIngredients.reduce((sum, p_ingredient) => sum+parseFloat(p_ingredient.ingredient.price),0.0);
+        return pizza.chosenIngredients.reduce((sum, p_ingredient) => sum+parseFloat(parseFloat(p_ingredient.ingredient.price)/pizza.slices),0.0).toFixed(2);
+    }
+
+    static retrieveFavouritePizzas({number = 3, onsuccess=()=>{} , onfailure=()=>{}, statusCode={}} = {}){
+        APIrequest(
+            "/menu/api/retrieveFavouritePizzas",
+            {
+                data: {number: number},
+                onsuccess : onsuccess,
+                onfailure : onfailure,
+                statusCode : statusCode,
+            }
+        )
     }
 }
 
@@ -46,10 +71,7 @@ class Order{
     static formattedWithdrawal(withdrawal){
         let date = new Date(Date.parse(withdrawal));
 
-        let minutes = date.getUTCMinutes();
-        if( minutes == '0' ) minutes = "00";
-
-        let time = date.getUTCHours()+":"+minutes;
+        let time = date.getUTCHours()+":"+date.getUTCMinutes();
         let day = date.getUTCDate()+"/"+(date.getUTCMonth()+1)+"/"+date.getUTCFullYear();
 
         return day+" "+time;

@@ -113,6 +113,26 @@
     color: red;
 }
 
+.slice-badge-ingredient{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 8px;
+    padding: 0px;
+    width: 15px;
+    height: 15px;
+    box-sizing: unset;
+    border: 0px;
+    border-radius: 50%;
+    left: -5px;
+    bottom: -4px;
+    background-color: dodgerblue;
+    color: white;
+    text-align: center;
+}
+
 .pizza_ingredients > .choosed.ingredient > label{
     margin: 0px;
     margin-top: 5px;
@@ -121,7 +141,7 @@
 .pizza_ingredients > .choosed.ingredient img{
     width: 40px;
     height: 40px;
-    box-shadow: 0px 10px 9px -4px grey;
+    filter: drop-shadow(4px 3px 3px #e4e4e4);
 }
 
 .slices_selector > .btn-group{
@@ -167,7 +187,7 @@
 .picker.ingredient > img {
     width: 50px;
     height: 50px;
-    /* box-shadow: 0px 10px 9px -4px grey; */
+    filter: drop-shadow(4px 3px 3px #e4e4e4);
 }
 
 .picker.ingredient > label {
@@ -175,6 +195,7 @@
 }
 
 .ingredient_slice_selector{
+    z-index: 1;
     position: absolute;
     top: 5px;
 }

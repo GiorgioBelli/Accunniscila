@@ -43,7 +43,9 @@ class OrderRenderer{
                         </div>
                     </div>
                     <div class="row single last">
-                        <a href="./${order.id}" role="button" class="btn btn-primary order-details">Dettagli Ordine</a>
+                        <a href="./${order.id}">
+                            <button role="button" class="btn btn-primary order-details">Dettagli Ordine</button>
+                        </a>
                     </div>
                 </div>
             </div>

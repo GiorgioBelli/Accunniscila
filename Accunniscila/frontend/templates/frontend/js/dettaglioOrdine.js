@@ -12,10 +12,7 @@ function getDetails(){
     APIrequest(
         "/order/api/orders/" + id,
         {
-            statusCode: {
-                200: (data) => PageRenderer.render(data),
-                400: (data) => AlertRenderer.render(400, data.responseJSON["result_msg"], "order"),
-            }
+            onsuccess: (data) => PageRenderer.render(data)
         }
     );
 }
@@ -34,7 +31,7 @@ function updateStatus(newStatus){
 
 class PageRenderer{
     static render(data){
-        console.log(data["result_msg"])
+        
         var address = data["body"]["address"];
         var client = data["body"]["client"]["user"]["firstname"] + " " + data["body"]["client"]["user"]["lastname"]; 
         var withdrawal = data["body"]["withdrawal"];
@@ -88,14 +85,12 @@ class OrderInfoRenderer{
         switch (nextStatus) {
             case "W":
             case "C":
-                $("#nextStatus").unbind();
                 $("#nextStatus").on("click", function(){
                     updateStatus(nextStatus);
                 });
                 break;
             case "NoNextStatus":
-                $("#nextStatus").unbind();
-                $("#nextStatus").css("color", "#818882");
+                $("#nextStatus").addClass("disabled");
                 break;
             default:
                 break;
@@ -116,9 +111,10 @@ class PizzaRenderer{
 
         for(let c=0; c<pizza.chosenIngredients.length; c++){
             pizza_preview.append( IngredientRenderer.render(pizza.chosenIngredients[c][0], pizza.chosenIngredients[c][1], pizza.slices) );
+            console.log(pizza)
         }
 
-        var pizza_description = $(`<div class="pizza_description text-center"></div>`).append(pizza.description);
+        var pizza_description = $(`<div class="pizza_description text-left"></div>`).append(pizza.description);
         var pizza_price = $(`<div class="pizza_price text-right"></div>`).append($("<h3></h3>").append("€ " + pizza.price));
 
         col1.append(pizza_name);

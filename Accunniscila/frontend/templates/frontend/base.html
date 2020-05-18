@@ -44,8 +44,11 @@
                       </div>
                     
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item profile" href="#">Profilo</a>
+                        {% if user.is_staff %}
+                        <a class="dropdown-item my_orders" href="http://217.61.121.77:8000/myOrders/">Gestisci Ordini</a>
+                        {% else %}
                         <a class="dropdown-item my_orders" href="http://217.61.121.77:8000/myOrders/">I Miei Ordini</a>
+                        {% endif %}
                         <a class="dropdown-item login" href="#">Logout</a>
                       </div>
                     </div>

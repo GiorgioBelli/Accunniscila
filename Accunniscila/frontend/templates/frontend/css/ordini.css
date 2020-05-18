@@ -64,8 +64,7 @@
     color: #1565c0;
 }
 
-.myCard-body .btn.order-details{
-    align-self: right;
+.myCard-body .btn.order-details, .myCard-body .row.last > a{
     width: 100%;
 }
 

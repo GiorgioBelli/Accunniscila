@@ -43,7 +43,10 @@ function main() {
     });
 
     $(".btn.send-order").click((e) => {
-        sendOrder(list);
+        if( $("#address").val().replace(/\s/g, '') == "" || $("#datetime").val() == "" )
+            AlertRenderer.render(400, "Assicurati di Inserire un Indirizzo e una data di consegna corretti !", "");
+        else 
+            sendOrder(list);
     });
 
     $(".btn.order").click((e) => {
@@ -68,7 +71,7 @@ class IngredientRenderer {
 
 
         var html_ingredient = $(`
-        <div draggable="true" class="picker ingredient" data-id="${ingredient.id}">
+        <div class="picker ingredient" data-id="${ingredient.id}">
             <img  src="${ingredient.image}" alt="">
             <label for="name">${ingredient.nameToShow}</label>
         </div>
@@ -118,6 +121,7 @@ class IngredientRenderer {
             <div class="image">
                 <img src="${ingredient.image}" alt="">
                 <span class="btn remove-ingredient glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                <span class="slice-badge-ingredient" data-slice="${slice}">${slice}</span>
             </div>
             <label for="name">${ingredient.nameToShow}</label>
         </div>
@@ -285,7 +289,10 @@ class PizzaBlockRenderer {
         }).bind(this);
 
         this.pizza_preview.append(IngredientRenderer.createPizzaPreviewIngredient(ingredient, slice, slices))
-        this.choosen_ingredients.append(IngredientRenderer.ChoosenRender(ingredient, slice, slices, onIngredientRemove));
+
+        let last_element = this.choosen_ingredients.find(`.choosed.ingredient [data-slice=${slice}]`).last().closest(".choosed.ingredient")[0];
+        if(last_element == null) this.choosen_ingredients.append(IngredientRenderer.ChoosenRender(ingredient, slice, slices, onIngredientRemove))
+        else (IngredientRenderer.ChoosenRender(ingredient, slice, slices, onIngredientRemove)).insertAfter(last_element);
 
         this.updatePizzaPrice(this.pizza.price);
     }
@@ -389,13 +396,43 @@ class PizzasListRender {
 
     static fillModalBody(list){    
         $(".modal-body.confirm").empty();
-        var body = $("<p></p>");
-        body.append("Sicuro di voler procedere con il seguente ordine ?<br><br><br>");
+        var body = $("<div class='container'></div>");
+        var title = $("<div class='row'></div>");
+        title.append("Sicuro di voler procedere con il seguente ordine ?<br><br>");
+        body.append(title);
+
+        var totalPrice = 0;
+
         for (let index = 0; index < list.length; index++) {
             const element = list[index];
-            body.append("<h3>" + element.name + " </h3> <h6> (" + element.description + ") </h6> "+ "<h3> " + element.price + " €</h3><br>");
+            var pizza = $("<div></div>");
+            var pizza_header = $("<div class='row'></div>");
+            var pizza_body = $("<div class='row'></div>");
+
+            var name = $("<div class='col'></div>").append($("<h3></h3>").append(element.name));
+            var price = $("<div class='col text-right'></div>").append($("<h3></h3>").append("€" + element.price));
+
+            totalPrice += parseFloat(element.price);
+
+            var ing = $("<div class='col'></div>").append($("<h6></h6>").append(element.description.replace(new RegExp('<br>', 'g'), '')));
+
+            pizza_header.append(name);
+            pizza_header.append(price);
+            pizza_body.append(ing);
+            pizza.append(pizza_header);
+            pizza.append(pizza_body);
+            body.append(pizza);
+            body.append($("<hr>"));
         }
-        body.append("<br><h3>" + $("#address").val() + " " + $("#datetime").val()+ "</h3>");
+        var body_footer = $("<div class='row'></div>");
+        var ind = $("<div class='col'></div>").append($("<h3></h3>").append($("#address").val()));
+        var wit = $("<div class='col'></div>").append($("<h3></h3>").append($("#datetime").val()));
+        var tot = $("<div class='col-auto'></div>").append($("<h3></h3>").append("€" + totalPrice.toFixed(2)));
+        body_footer.append(ind);
+        body_footer.append(wit);
+        body_footer.append(tot);
+        body.append(body_footer);
+
         $(".modal-body.confirm").append(body); 
     }
 
@@ -436,8 +473,8 @@ class PizzasListRender {
         {
             data: data,
             statusCode: {
-                200: (data) => AlertRenderer.render(200, data["message"], "order"),
-                400: (data) => AlertRenderer.render(400, data["message"], "order"),
+                200: (data) => window.location.replace("http://217.61.121.77:8000/myOrders/"+data["body"][0]),
+                400: (data) => AlertRenderer.render(400, data["result_msg"], "order"),
             }
 
         }

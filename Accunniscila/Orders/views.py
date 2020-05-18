@@ -120,7 +120,7 @@ class CreateOrder(AuthAPIView):
             order.pizza.add(pizza) 
     
         order.save()
-        return JsonMessage(status=200,result_msg="Congratulazioni, il tuo ordine è stato registrato con successo.")
+        return JsonMessage(status=200,result_msg="Congratulazioni, il tuo ordine è stato registrato con successo.", body=[order.id])
         
 class RetrieveOrderDetails(AuthAPIView):
     '''

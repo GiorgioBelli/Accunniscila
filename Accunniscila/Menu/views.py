@@ -5,6 +5,8 @@ from .models import Menu, Pizza, Ingredient
 
 from django.http import HttpResponse
 
+import random
+
 import json
 
 # Create your views here.
@@ -35,7 +37,7 @@ class RetrieveMenu(EmptyAPIView):
                 )
 
 
-        menu_pizzas = Menu.objects.get("name")
+        menu_pizzas = Menu.objects.get(name=name)
 
         data = []
         for pizza in menu_pizzas.pizzas:
@@ -50,6 +52,29 @@ class RetrieveAvailableMenus(EmptyAPIView):
         data = []
         for menu in menus:
             data.append(Menu.serialize(menu))
+
+        return JsonMessage(body=data)
+
+class RetrieveFavouritePizzas(EmptyAPIView):
+    def post(self,request):
+
+        body = json.loads(request.body)
+
+        number = body.get("number")
+
+        menus = Menu.objects.prefetch_related("pizzas").all()
+
+        print(menus)
+
+        pizzas = []
+        for menu in menus:
+            for pizza in menu.pizzas.all():
+                pizzas.append(pizza)
+
+        data = []
+
+        for fpizza in random.sample(pizzas,number):
+            data.append(Pizza.serialize(fpizza))
 
         return JsonMessage(body=data)
 
