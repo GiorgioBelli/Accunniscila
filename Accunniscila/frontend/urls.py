@@ -1,6 +1,6 @@
 from django.urls import path
+from django.conf.urls import url
 from . import views
-
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name="IndexView" ),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('menu/', views.Menu.as_view(), name="Menu" ),
     path('signUp/', views.SignUp.as_view(), name="SignUp" ),
     path('login/', views.Login.as_view(), name="Login" ),
+    url(r'.*', views.NotFound.as_view(), name="NotFound" ),
 ]

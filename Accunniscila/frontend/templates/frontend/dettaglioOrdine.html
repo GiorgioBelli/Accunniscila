@@ -10,9 +10,12 @@
                         <i class="material-icons">person_pin_circle</i>
                         <label for="text" id="address"></label>
                     </div>
-                    <div class="row  myCard-info">
+                    <div class="row myCard-info">
                         <i class="material-icons">person_pin</i>
-                        <label for="text" id="client"></label>
+                        <div class="client-info">
+                            <label for="text" id="client"></label>
+                            <a href="" id="phone_number"></a>
+                        </div>
                     </div>                
                 </div>
                 <div class='col'>
@@ -41,12 +44,10 @@
 {% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"/>
     <link rel="stylesheet" type="text/css" href="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/frontend/css/dettaglioOrdine.css">
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
     <script type="text/javascript" src="http://217.61.121.77/gagosta/phptest/VenvDjango/Accunniscila/Accunniscila/frontend/templates/frontend/js/dettaglioOrdine.js"></script>
 {% endblock %}
  

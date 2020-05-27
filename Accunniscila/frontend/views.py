@@ -69,3 +69,8 @@ class About(NoAuthAPIView):
 
     def get(self,request):
         return render(request, 'frontend/about.html')
+
+class NotFound(NoAuthAPIView):
+
+    def get(self,request):
+        return render(request, 'frontend/404.html')

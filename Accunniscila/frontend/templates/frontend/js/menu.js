@@ -49,6 +49,17 @@ class MenuRenderer{
     static render(menu){
         var body = $(`<div class="menu container"></div>`);
 
+        let header = $(`
+            <div class="row menu-header">
+                <div class="col-sm-12 text-left">
+                    <h1>${menu.name}</h1>
+                    <hr>
+                </div>
+            </div>
+        `);
+
+        body.append(header)
+
         var nrow = Math.round(menu.pizzas.length);
         var position = 0;
         for (var r = 0; r < nrow; r++) {

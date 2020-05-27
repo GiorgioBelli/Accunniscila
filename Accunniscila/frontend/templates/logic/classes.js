@@ -44,8 +44,7 @@ class Pizza{
             desc += key + ":" + description[key].join(", ") + " <br>";
         }
         for (let i = 0; i < 3 - Object.keys(description).length; i++) {
-            desc += "<br>";    
-            console.log(desc);        
+            desc += "<br>";
         }
         return desc;
     }

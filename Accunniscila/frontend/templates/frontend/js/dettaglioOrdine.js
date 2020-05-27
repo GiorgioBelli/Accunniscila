@@ -24,7 +24,7 @@ function updateStatus(newStatus){
         "/order/api/orders/" + id + "/update",
         {
             data : {"status": newStatus},
-            onsuccess: (data) => OrderInfoRenderer.render("", "", "", newStatus, true)
+            onsuccess: (data) => OrderInfoRenderer.render("", "", "", "", newStatus, true)
         },
     );
 }
@@ -32,13 +32,14 @@ function updateStatus(newStatus){
 class PageRenderer{
     static render(data){
         
-        var address = data["body"]["address"];
-        var client = data["body"]["client"]["user"]["firstname"] + " " + data["body"]["client"]["user"]["lastname"]; 
-        var withdrawal = data["body"]["withdrawal"];
-        var status = data["body"]["status"];
-        var pizzas = data["body"]["pizzas"];
+        let address = data["body"]["address"];
+        let client = data["body"]["client"]["user"]["firstname"] + " " + data["body"]["client"]["user"]["lastname"]; 
+        let phone_number = data["body"]["client"]["phone"];
+        let withdrawal = data["body"]["withdrawal"];
+        let status = data["body"]["status"];
+        let pizzas = data["body"]["pizzas"];
         
-        OrderInfoRenderer.render(address, client, withdrawal, status, false);
+        OrderInfoRenderer.render(address, client, phone_number, withdrawal, status, false);
 
         for(let c=0; c<pizzas.length; c++){
             var ingredients = [];
@@ -57,25 +58,30 @@ class PageRenderer{
 }
 
 class OrderInfoRenderer{
-    static render(address, client, withdrawal, status, onlyState){
+    static render(address, client, phone_number, withdrawal, status, onlyState){
         
         if( !onlyState ){
-            $("#address").html(address);
-            $("#client").html(client);
-            $("#datetime").html(Order.formattedWithdrawal(withdrawal));
+            $("#address").text(address);
+            $("#client").text(client);
+
+            $('#phone_number').text(`(${phone_number})`);
+            $('#phone_number').attr("href",`tel:${phone_number}`);
+            
+            
+            $("#datetime").text(Order.formattedWithdrawal(withdrawal));
         }
 
         var nextStatus = "W";
         switch (status) {
             case "P":
-                $("#status").html("Pending");
+                $("#status").text("Pending");
                 break;
             case "W":
-                $("#status").html("Working");
+                $("#status").text("Working");
                 nextStatus = "C";
                 break;
             case "C":
-                $("#status").html("Completed");
+                $("#status").text("Completed");
                 nextStatus = "NoNextStatus";
                 break;
             default:

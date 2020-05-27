@@ -30,8 +30,19 @@ body>.container>div{
 .myCard-info{
     display:flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     padding-left: 15px;
+}
+
+.client-info{
+    display: inline-flex;
+    flex-direction: column;    
+}
+
+.client-info #phone_number{
+    font-size: 12px;
+    color: dodgerblue;
+    align-self: flex-end;
 }
 
 .myCard-info:not(:last-child){

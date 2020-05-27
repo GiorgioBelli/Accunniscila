@@ -11,6 +11,10 @@
     text-align: -webkit-center !important;
 }
 
+.menu .menu-header h1{
+    color: #78c1ff;
+}
+
 .myCard-img{
     width: 100%;
 }

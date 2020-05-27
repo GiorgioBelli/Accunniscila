@@ -184,6 +184,11 @@
 
 }
 
+.ingredient_preview{
+    animation: ingredient-fadein 2s;
+    animation-iteration-count: 1;
+}
+
 .picker.ingredient > img {
     width: 50px;
     height: 50px;
@@ -270,6 +275,15 @@ div>.btn-panel>*{
     right: 5%;
     font-family: 'Oswald', sans-serif;
     font-size: 20px;
+}
+
+@keyframes ingredient-fadein{
+    0%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 @media only screen and (min-width: 767px) {
