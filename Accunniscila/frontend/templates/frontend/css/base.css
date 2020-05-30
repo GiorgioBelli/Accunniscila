@@ -43,17 +43,25 @@ a, a:hover, a:active{
     nav{
         grid-column: 2;
     }
+
+    
 }
 
-@media only screen and (min-width: 767px) {
+.navbar-collapse .nav-btn{
+    color: #9e9e9e;
+}
+
+@media only screen and (min-width: 768px) {
     .nav-btn{
         border-radius: 100px;
         background-color: #78c1ff;
         box-shadow: 3px 3px 5px 0 rgba(0,0,0,.1);
         padding: 8px 25px;
 
-        color: white;
         user-select: none;
+    }
+    .nav-btn{
+        color: white !important;
     }
 }
 
@@ -170,7 +178,12 @@ footer a:hover, footer a:active, footer a:visited{
     background-color: #78c1ff;
 }
 
+.menu_collapse_button{
+    color: #9e9e9e;
+}
+
 @media only screen and (max-width: 640px) {
+
     .myfooter{
         background-size: unset;
         height: 90px;

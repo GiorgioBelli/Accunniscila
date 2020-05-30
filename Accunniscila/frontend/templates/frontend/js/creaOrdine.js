@@ -384,6 +384,7 @@ class PizzasListRender {
     static createModalMenuList(menu = new Menu()) {
         var onItemClick = (pizza, blockRenderer) => {
             blockRenderer.resetPizza();
+            blockRenderer.block.find(`.slices_selector>.btn-group>.btn:nth-child(${pizza.slices})`).click();
             pizza.chosenIngredients.forEach(pizza_ingredient => {
                 blockRenderer.addChoosenIngredient(pizza_ingredient.ingredient, pizza_ingredient.slice.number, pizza.slices);
             });
