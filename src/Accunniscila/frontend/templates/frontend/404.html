@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <style>
+        body{
+            overflow-y: hidden;
+        }
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        img{
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        a{
+            position: absolute;
+            top: 75%;
+            left: 48%;
+            transform: translateX(-50%);
+        }
+
+        .btn{
+            color: white;
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <img src="/static/error/404.png" alt="404_notfound">
+    <a href="/"><button class="btn btn-warning ">Vai alla Home</button></a>
+</body>
+</html>

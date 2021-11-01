@@ -1,0 +1,317 @@
+.root{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.pizza_block{
+    z-index: 1;
+    box-shadow: 11px 11px 20px 0px #ece8e8;
+    padding: 30px 20px;
+    margin: 20px 0px;
+    width: 100%;
+    
+    border: 1px solid rgb(247, 247, 247);
+    border-radius: 20px;
+}
+
+.pizza_block > .header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-end;
+    padding: 5px;
+}
+
+.pizza_block > .body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 50px;
+
+}
+
+.pizza_name, .address, .dateTime{
+    border-bottom: 1px solid lightgray;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    outline: none;
+    margin-top: 10px;
+
+    font-family: 'Oswald', sans-serif;
+}
+
+.slices_selector{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.pizza_block > .header .button-panel{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pizza_block > .header .button-panel button > .glyphicon{
+    font-size: 20px;
+}
+
+.btn.remove-pizza-block > span{
+    color: red;
+}
+
+.btn.reset-pizza-block > span{
+    color: #67c0ff;
+}
+
+.pizza_ingredients{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    margin-top: 50px;
+    align-items: center;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+
+.pizza_ingredients > .choosed.ingredient{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 10px;
+
+}
+
+.pizza_ingredients > .choosed.ingredient > .image{
+    position: relative;    
+}
+
+.btn.remove-ingredient{
+    position: absolute;
+    font-size: 10px;
+    padding: 0px;
+
+    box-sizing: unset;
+    border: 0px;
+
+    top: -9px;
+    right: -9px;
+
+    color: red;
+}
+
+.slice-badge-ingredient{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 8px;
+    padding: 0px;
+    width: 15px;
+    height: 15px;
+    box-sizing: unset;
+    border: 0px;
+    border-radius: 50%;
+    left: -5px;
+    bottom: -4px;
+    background-color: dodgerblue;
+    color: white;
+    text-align: center;
+}
+
+.pizza_ingredients > .choosed.ingredient > label{
+    margin: 0px;
+    margin-top: 5px;
+}
+
+.pizza_ingredients > .choosed.ingredient img{
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(4px 3px 3px #e4e4e4);
+}
+
+.slices_selector > .btn-group{
+    transform: scale(1.4);
+}
+
+.ingredients_picker_container{
+    justify-content: space-around;
+}
+
+.btn.add-from-menu{
+    align-self: center;
+    background-color: #ffb253;
+    border-color: #ffb253;
+    padding: 5px;
+}
+
+.ingredients_picker{
+    min-height: 100px;
+    display: flex;
+    flex-direction: row;
+
+    border-radius: 10px;
+
+    overflow-x: auto;
+}
+
+.picker.ingredient:hover{
+    cursor: pointer;
+} 
+.picker.ingredient{    
+    position: relative;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+.ingredient_preview{
+    animation: ingredient-fadein 2s;
+    animation-iteration-count: 1;
+}
+
+.picker.ingredient > img {
+    width: 50px;
+    height: 50px;
+    filter: drop-shadow(4px 3px 3px #e4e4e4);
+}
+
+.picker.ingredient > label {
+    white-space: nowrap;
+}
+
+.ingredient_slice_selector{
+    z-index: 1;
+    position: absolute;
+    top: 5px;
+}
+
+div>.btn-panel>*{
+    margin: 5px 10px;
+}
+
+#menu-modal .menu_name_select{
+
+    padding: .25em;
+    border: 0;
+    border-bottom: 2px solid #ffb253; 
+    font-weight: normal;
+    letter-spacing: .15em;
+    outline: none;
+}
+
+.myCard.menu{
+    width: 90%;
+}
+
+.myCard.menu .row{
+    text-align: center !important;
+}
+
+
+.myCard.menu:hover{
+    border: 1px solid #c0e0ff;
+    box-shadow: 2px 1px 20px 10px #dcecfb;
+    cursor: pointer;
+}
+
+.myCard.withdrawal{
+    margin-top: 5%;
+    width: 100%;
+}
+
+.address{
+    position: relative;
+    width: 100%;
+    margin: 3% 2% 3% 10%;
+}
+
+.dateTime{
+    position: relative;
+    width: 70%;
+    margin: 3% 2% 3% 2%;
+}
+
+#datetime-icon{
+    margin: 3% 10% 3% 0%;
+    cursor: pointer;
+}
+
+.address::placeholder, .dateTime::placeholder{
+    text-align: center;
+}
+
+.dateTime::disabled{
+    background: #ffffff;
+    opacity: 1;
+}
+
+.confirm>p>*{
+    display: inline-block;
+}
+
+.priceLabel{
+    position: absolute;
+    bottom: -15%;
+    right: 5%;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+}
+
+@keyframes ingredient-fadein{
+    0%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media only screen and (min-width: 767px) {
+
+    .myCard.menu .row{
+        text-align: left !important;
+    }
+
+    .myCard-desc.menu{
+        width: 50%;
+    }
+
+    .myCard-img.menu{
+        width: 50%;
+    }
+
+    .myCard-price.menu{
+        color: #333333 !important;
+        text-align: right !important;
+        padding: 0px;
+        padding-right: 20px;
+    }
+
+    .address{
+        margin: 3% 2% 3% 5%;
+    }
+
+    #datetime-icon{
+        margin-right: 5%;
+    }
+}

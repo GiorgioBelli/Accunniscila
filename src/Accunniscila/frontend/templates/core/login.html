@@ -1,0 +1,58 @@
+{% extends '../frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="form container login-form">
+        <div class="form-logo">
+            <a href="/" class="btn btn-link text-center">
+                <img src="/static/1x/inline_logo.png">
+            </a>
+        </div>
+        <div class="row first">
+            <div class="error_message col-sm text-center ">
+                <label for="error_message"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <input class="form-control form-control-lg email" type="text" placeholder="Email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <input class="form-control form-control-lg password" type="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="row last">
+            <div class="col-sm">
+                <div class="form-check text-center">
+                    <input class="remember_me" type="checkbox">
+                    <label for="remember_me">resta connesso</label>
+                  </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm text-center mb-0">
+                <a href="#" class="btn btn-link text-center">hai dimenticato la password?</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm text-center mt-0">
+                <a href="/signUp/" class="btn btn-link text-center">Non hai un account? Registrati.</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm mt-0">
+                <div data-page-target="{{target_page}}" class="mybtn btn-login">Login</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/templates/core/css/access.css">
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="/static/templates/core/js/login.js"></script>
+{% endblock %}

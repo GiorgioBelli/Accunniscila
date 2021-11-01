@@ -1,0 +1,79 @@
+{% extends '../frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container root">
+        <div class="myCard withdrawal">
+            <div class="row">
+                <div class='col'>
+                    <input type="text" placeholder="Indirizzo Di Consegna" id="address" class="address" maxlength="40">
+                </div>
+                <div class='col text-right'>
+                    <input type="text" id="datetime" class="dateTime" placeholder="Orario Consegna" readonly>
+                    <span id="datetime-icon" class="glyphicon glyphicon-calendar"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row text-center btn-panel">
+            <button type="button" class="btn btn-primary btn-lg text-nowrap add-pizza">Aggiungi Pizza</button>
+            <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-lg text-nowrap order">Aggiungi Ordine</button>
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="menu-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-6">
+                     <h3>Menu</h3>
+                    </div>
+                    <div class="col-6">
+                        <select name="menus" id="menus" class="menu_name_select"></select>
+                    </div>
+                  </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel">Conferma Ordine</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body confirm"></div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary send-order" data-dismiss="modal">Inserisci Ordine</button>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/templates/frontend/css/creaOrdine.css">
+    <link rel="stylesheet" type="text/css" href="/static/libraries/datetimePicker/datetime.css">
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="/static/templates/frontend/js//creaOrdine.js"></script>
+    <script type="text/javascript" src="/static/libraries/datetimePicker/datetime.js"></script>
+{% endblock %}
+

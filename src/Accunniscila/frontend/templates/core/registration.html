@@ -1,0 +1,57 @@
+{% extends '../frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="form registration-form container">
+        <div class="form-logo">
+            <a href="/" >
+                <img href="/" src="/static/1x/inline_logo.png">
+            </a>
+        </div>
+        <div class="row first">
+            <div class="col-sm">
+                <input class="form-control form-control-lg first_name" type="text" placeholder="Nome">
+            </div>
+            <div class="col-sm">
+                <input class="form-control form-control-lg last_name" type="text" placeholder="Cognome">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <input class="form-control form-control-lg email" type="email" placeholder="Email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <input class="form-control form-control-lg password" type="password" placeholder="Password">
+            </div>
+            <div class="col-sm">
+                <input class="form-control form-control-lg password_confirm" type="password" placeholder="Confirm Password">
+            </div>
+        </div>
+        <div class="row last">
+            <div class="col-sm">
+                <input class="form-control form-control-lg phone_number" type="text" placeholder="N. Telefono" pattern="[0-9]{10,10}">
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm text-center mb-0">
+                <a href="/login/" class="btn btn-link text-center">Sei gia registrato? Accedi.</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm mt-0">
+                <div class="mybtn btn-register">Registrati</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/templates/core/css/access.css">
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="/static/templates/core/js/registration.js"></script>
+{% endblock %}

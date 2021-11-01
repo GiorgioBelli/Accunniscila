@@ -1,0 +1,198 @@
+{% load static %}
+
+.navbar-brand{
+    width: 60px;
+    height: 50px;
+}
+
+a, a:hover, a:active{
+    text-decoration: none;
+    outline: none;
+    color: white;
+}
+
+.page-header{
+    background-color: #ffb253;
+}
+
+.pizza_preview{
+    position: relative;
+    width: 100%;
+    height: 250px;
+    z-index: 0;
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/pizza_bianca.png");
+}
+
+.ingredient_preview{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media only screen and (min-width: 1025px) {
+    .page-header{
+        display: grid;
+        grid-template-columns: auto 50% auto;
+    }
+
+    nav{
+        grid-column: 2;
+    }
+
+    
+}
+
+.navbar-collapse .nav-btn{
+    color: #9e9e9e;
+}
+
+@media only screen and (min-width: 768px) {
+    .nav-btn{
+        border-radius: 100px;
+        background-color: #78c1ff;
+        box-shadow: 3px 3px 5px 0 rgba(0,0,0,.1);
+        padding: 8px 25px;
+
+        user-select: none;
+    }
+    .nav-btn{
+        color: white !important;
+    }
+}
+
+.page-header .nav-item{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.myfooter{
+    height: 190px; 
+    background-image: url('https://res.cloudinary.com/glovoapp/image/fetch///https://glovoapp.com/images/svg/curve.svg'); 
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: scaleY(-1);
+    background-color: #4a4a4a;
+    border: 0px solid;
+}
+
+.info-container{
+    position: relative;
+    width: 100%;
+    background-color: #4a4a4a;
+    color: white;
+    margin-top: -1px;
+    font-size: 14px;
+    padding-top: 50px;
+    padding-bottom: 25px;
+    
+}
+
+footer{
+    background-color: #4a4a4a;
+    border: 0px solid;
+}
+
+.headline{
+    height: 35px;
+    text-transform: uppercase;
+    color: #9b9b9b;
+}
+
+.row.foot{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+}
+
+.inline-logo>img{
+    position: relative;
+    width: 70%;
+}
+
+.col-item{
+    padding-bottom: 10px;
+}
+
+.root{
+    max-width: 740px;
+}
+
+.myCard{
+    border-radius: 20px;
+    box-shadow: 4px 2px 8px 1px #ece8e8;
+    height: auto;
+    border: 1px solid rgb(247, 247, 247);
+    margin-bottom: 5%;
+}
+
+.myCard-img{
+    position: relative;
+    height: auto;
+    padding: 10px;
+}
+
+.myCard-desc{
+    position: relative;
+    height: auto;
+    padding-bottom: 5px;
+    padding-top: 20px;
+}
+
+.myCard-desc>p{
+    color: #929292;
+}
+
+.result_alert{
+    z-index: 10;
+    position: fixed;
+    top: 15%;
+    left: calc(50% - 250px);
+    width: 500px;
+}
+
+.myCard-price{
+    color: #333333 !important;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+a:visited{
+    color: #0056b3;
+}
+
+footer a:hover, footer a:active, footer a:visited{
+    text-decoration: none;
+    outline: none;
+    color: white;
+}
+
+.page-haeder .profile-dropdown{
+    background-color: #78c1ff;
+}
+
+.menu_collapse_button{
+    color: #9e9e9e;
+}
+
+@media only screen and (max-width: 640px) {
+
+    .myfooter{
+        background-size: unset;
+        height: 90px;
+    }
+
+    .result_alert{
+        width: 300px;
+        left: calc(50% - 150px);
+    }
+}

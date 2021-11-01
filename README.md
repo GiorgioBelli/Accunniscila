@@ -1,8 +1,9 @@
 # Accunniscila
-Ordering pizza website with seasoning customization.
+Pizza ordering website with seasoning customization.
 
 ## Demo
-Website is available at [link](http://217.61.121.77:8000/)
+### Launch with docker
+You can launch the application with docker-compose running `"docker-compose up"` from the root directory. The command will starts two containers, one for the application and one for the database. There is no persistency so if you restart the application all the data will be lost
 
-## Usage
-Download folder and launch the project with python manage.py runserver <ip>:<port>
+### Launch with Python/Django
+After the repo is downloaded, from the go inside the `"src/Accunniscila"` folder and run the command inside `"entry_point.sh"`

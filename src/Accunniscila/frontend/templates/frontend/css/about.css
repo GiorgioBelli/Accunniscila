@@ -1,0 +1,71 @@
+.business-card{
+    padding: 20px;
+}
+
+.business-card > .informations{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    order: 2;
+}
+
+.business-card >.image-box{
+    order: 1;
+}
+
+.business-card >.image-box > img{
+    width: 70%;
+}
+
+@media only screen and (min-width: 576px) {
+    .business-card:nth-child(odd) > .informations{order: 1;}
+    .business-card:nth-child(odd) >.image-box{order: 2;}
+}
+
+
+.informations > .bio{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.links{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 100%;
+}
+
+.icons-panel{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+
+}
+
+.links > .icons-panel .icon{
+    width: 50px;
+    height: 50px;
+
+    filter: drop-shadow(6px 2px 3px rgba(0,0,0,0.5));
+}
+
+.informations > .bio > .business-card-title{
+    font-style: normal;
+}
+
+.informations > .bio > .business-card-subtitle{
+    font-style: italic;
+    color: gray;
+}
+
+.links > .links-header{
+    font-style: bold;
+}
+
